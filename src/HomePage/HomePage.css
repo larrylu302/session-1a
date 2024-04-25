@@ -1,0 +1,54 @@
+.homepage-container {
+    text-align: center;
+    padding: 20px;
+  }
+
+  .title {
+    margin-bottom: 20px;
+    color: #004d99; /* A friendly blue for the title */
+    font-family: 'Comic Sans MS', 'Comic Sans', cursive; /* A font style often associated with children */
+  }
+
+  .games-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Creates a 2x2 grid */
+    gap: 20px;
+    max-width: 600px; /* Adjust the size as needed */
+    margin: auto;
+  }
+
+  .game-button {
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+    font-size: 24px;
+    font-family: 'Comic Sans MS', 'Comic Sans', cursive;
+    text-decoration: none; /* Removes the underline from links */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 150px; /* Set a fixed height for uniformity */
+  }
+
+  .words-game {
+    background-color: #ff9999; /* A soft red */
+  }
+
+  .digits-game {
+    background-color: #99ff99; /* A soft green */
+  }
+
+  .digits-reversed-game {
+    background-color: #9999ff; /* A soft purple */
+  }
+
+  .verbal-game {
+    background-color: #87CEEB; /* A sky blue */
+  }
+
+  /* Hover effects to make the buttons interactive */
+  .game-button:hover {
+    opacity: 0.9;
+    transform: scale(1.05);
+    transition: all 0.3s ease;
+  }
