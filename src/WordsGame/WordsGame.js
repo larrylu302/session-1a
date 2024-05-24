@@ -192,9 +192,8 @@ const WordsGame = () => {
   const [showSettingsForm, setShowSettingsForm] = useState(false);
 
   return (
-    <div className="App">
+    <div className="WordsGame">
       <BackToHomeButton />
-      <h1>Word Recall</h1>
       {gameState.currentRound <= gameState.totalRounds && renderGameUI()}
       {gameState.currentRound > gameState.totalRounds && renderGameOver()}
       {showSettingsForm && renderSettingsForm()}
@@ -262,7 +261,13 @@ const WordsGame = () => {
   function renderInitialView() {
     return (
       <>
-        <div style={{ marginBottom: '30px' }}>Instructions go here!</div>
+        <div style={{ marginBottom: '30px' }} className='animal-button'>
+          <h1>Word Recall</h1>
+Directions: You will be presented with several words. Your job is to remember these words in order and select tiles with those words in the exact same order that they were presented.
+
+<div style={{paddingTop:'20px'}}>But be careful! You cannot change your answers once you’ve selected a tile. Choose wisely. The fate of the multiverse depends on you!</div>
+
+</div>
         <button className="button" onClick={() => {
           setShowSettingsForm(true);
           setGameState(prev => ({ ...prev, showInitial: false }))

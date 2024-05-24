@@ -28,6 +28,8 @@ const buttonStyle = {
   borderRadius: '5px',
   cursor: 'pointer',
   fontSize: '1em',
+  position: 'fixed',
+  top:'25px',
 };
 
 export default BackToHomeButton;

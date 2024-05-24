@@ -1,25 +1,25 @@
 /* Apply a fun and colorful theme to the entire app */
-.App {
+/* Make sure html, body, and root elements take the full height */
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.WordsGame {
   text-align: center;
-  background-color: #f0f8ff; /* Light azure to make the game feel airy and open */
-  font-family: 'Comic Sans MS', 'Chalkboard SE', 'Arial', sans-serif; /* Playful font */
-  color: #333; /* Darker color for better readability */
-}
-
-/* Make the logo more engaging */
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-  animation: App-logo-spin infinite 20s linear;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  font-family: 'Comic Sans MS', 'Chalkboard SE', 'Arial', sans-serif;
+  color: #333;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-image: url('Words-background.png'); /* Ensure the path is correct */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 /* Enhance the word grid with more colors and interaction */
@@ -29,7 +29,7 @@
   gap: 15px;
   margin-bottom: 20px;
   padding: 10px;
-  background-color: #e3f2fd;
+  background-color: black;
   border-radius: 10px;
 }
 
@@ -38,8 +38,8 @@
   margin: 0;
   font-size: 1.2em;
   cursor: pointer;
-  background-color: #64b5f6; /* Blue buttons */
-  color: white;
+  background-color: #B1FAC3; /* Blue buttons */
+  color: black;
   border: none;
   border-radius: 5px; /* Rounded corners for buttons */
   transition: transform 0.3s ease; /* Smooth transformation on hover */
@@ -55,8 +55,8 @@
   margin-bottom: 15px; /* Ensure buttons don’t stick together */
   font-size: 1.2em;
   cursor: pointer;
-  background-color: #64b5f6; /* Consistent blue */
-  color: white;
+  background-color: #B1FAC3;
+  color: black;
   border: none;
   border-radius: 5px; /* Rounded corners */
   transition: transform 0.3s ease, background-color 0.3s ease; /* Smooth transitions */
@@ -87,7 +87,7 @@
 
 .animal-button.selected {
   background-color: #666; /* Darken the button */
-  color: #fff; /* Change text color to maintain contrast */
+  color: #black; /* Change text color to maintain contrast */
 }
 
 .confirmation-message {

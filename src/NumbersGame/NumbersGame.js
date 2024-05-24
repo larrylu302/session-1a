@@ -1,6 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './NumbersGame.css';
 import BackToHomeButton from '../Backtohomebutton';
+import volumeIcon from './volume_icon.png';
+import firstVideo from './numbers_first_video.mp4'
+import readInstructions from './decipher_password_voiceover.mp3'
+
+
 
 const NumbersGame = () => {
   // Initial states for easier resets
@@ -18,16 +23,25 @@ const NumbersGame = () => {
   };
 
   const initialSettings = {
-    sequenceLength: 5,
+    sequenceLength: 1,
     intervalBetweenDigits: 1,
-    timeBeforeTest: 3,
-    totalRounds: 3,
+    timeBeforeTest: 1,
+    totalRounds: 1,
   };
 
   const [gameState, setGameState] = useState(initialGameState);
   const [settings, setSettings] = useState(initialSettings);
   const [showSettingsForm, setShowSettingsForm] = useState(false);
   const [gameStarted, setGameStarted] = useState(false);
+  const [videoWatched, setVideoWatched] = useState(false); // State to track video completion
+  const [muted, setMuted] = useState(false);
+  const audioRef = useRef(null);
+
+  useEffect(() => {
+    if (audioRef.current && videoWatched && !gameStarted && !showSettingsForm) {
+      audioRef.current.play();
+    }
+  }, [videoWatched, gameStarted, showSettingsForm]);
 
   const startGame = () => {
     if (gameState.currentRound < settings.totalRounds) {
@@ -44,6 +58,10 @@ const NumbersGame = () => {
         currentRound: prevState.currentRound + 1,
       }));
       setGameStarted(true);
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.currentTime = 0;
+      }
     } else {
       setGameState(prevState => ({ ...prevState, gameOver: true }));
     }
@@ -53,7 +71,13 @@ const NumbersGame = () => {
     setGameState(initialGameState);
     setGameStarted(false);
     setShowSettingsForm(false);
+    setVideoWatched(false); // Reset video state
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+    }
   };
+
 
   const generateSequence = (length) => {
     return Array.from({ length }, () => Math.floor(Math.random() * 10));
@@ -101,17 +125,60 @@ const NumbersGame = () => {
   const handleShowSettings = () => {
     setShowSettingsForm(true);
     setGameStarted(false);
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+    }
+  };
+
+  const toggleMute = () => {
+    setMuted(!muted);
+    if (audioRef.current) {
+      audioRef.current.muted = !audioRef.current.muted;
+    }
+  };
+
+
+  const handleVideoEnd = () => {
+    setVideoWatched(true);
+  };
+
+  const handleSkipVideo = () => {
+    setVideoWatched(true);
   };
 
   return (
-    <div className="App">
+    <div className="NumbersGame">
       <BackToHomeButton />
-      <h1>Number Recall Game</h1>
-      <div style={{ marginBottom: '20px' }}> Instructions here </div>
-      {!gameStarted && !showSettingsForm && (
-        <div className="initial-buttons">
-          <button className="button" onClick={handleShowSettings}>Settings</button>
-          <button className="button" onClick={startGame}>Start Game</button>
+
+      {!videoWatched && (
+        <div className="video-container">
+          <div><video width="600" controls autoPlay playsInline onEnded={handleVideoEnd}>
+            <source src={firstVideo} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video></div>
+          <button className="number-button" onClick={handleSkipVideo}>Skip Video</button>
+        </div>
+      )}
+
+      {videoWatched && !gameStarted && !showSettingsForm && (
+        <div>
+          <div style={{ marginBottom: '50px', marginLeft:'30px', marginRight:'30px', paddingBottom:'70px' }} className='numbers-instructions'>
+            <h1>Decipher the Secret Password</h1>
+            Directions: You will hear several numbers (so make sure to wear your headphones!). Your job is to
+            remember these numbers and select the tiles with those numbers in the exact order of how they were
+            presented.
+            <div>But be careful! You cannot change your answers once you’ve selected them.  
+            Choose wisely. The fate of the multiverse depends on you!</div>
+          </div>
+          <div className="initial-buttons">
+            <button style={{marginRight:'20px'}} className="number-button" onClick={handleShowSettings}>Settings</button>
+            <button className="number-button" onClick={startGame}>Start Game</button>
+          </div>
+          <audio ref={audioRef} src={readInstructions} muted={muted} />
+          <button className="number-button" style={{ position: 'fixed', bottom: '10px', right: '10px' }} onClick={toggleMute}>
+          {muted ? 'Unmute' : 'Mute'}
+          </button>
         </div>
       )}
       {showSettingsForm && (
@@ -122,7 +189,11 @@ const NumbersGame = () => {
       )}
       {gameStarted && !gameState.gameOver && (
         <>
-          {gameState.displaySequence && <div className="alert-message">Listen carefully!</div>}
+          {gameState.displaySequence &&
+          <div className='numbers-instructions'>
+            <div>Listen carefully!</div>
+            <img src={volumeIcon} alt="img not working" />
+          </div>}
           <GameDisplay
             gameState={gameState}
             onNumberClick={handleNumberInput}
@@ -149,11 +220,11 @@ const GameDisplay = ({ gameState, onNumberClick }) => (
 );
 
 const RecallDisplay = ({ onNumberClick }) => (
-  <div className="RecallDisplay">
-    <h2>Recall the sequence:</h2>
+  <div className="RecallDisplay" style={{backgroundColor:'#f4c76e', borderRadius:'10px'}}>
+    <h2 style={{color:'black'}}>Recall the sequence:</h2>
     <div className="buttons">
       {Array.from({ length: 10 }, (_, index) => (
-        <button key={index} onClick={() => onNumberClick(index)} className="animal-button">
+        <button key={index} onClick={() => onNumberClick(index)} className="number-grid-button">
           {index}
         </button>
       ))}
@@ -162,11 +233,11 @@ const RecallDisplay = ({ onNumberClick }) => (
 );
 
 const GameOverDisplay = ({ score, maxDigitsInRound, onRestart }) => (
-  <div className="game-over-display">
+  <div className="numbers-instructions">
     <h2>Game Over</h2>
     <p>Your final score is: {score}</p>
     <p>Maximum digits recalled in one round: {maxDigitsInRound}</p>
-    <button onClick={onRestart} className="button">Start Over</button>
+    <button onClick={onRestart} className="number-setting-button-submit">Done</button>
   </div>
 );
 
@@ -184,7 +255,7 @@ const SettingsForm = ({ onSave, initialSettings }) => {
   };
 
   return (
-    <div className="settings-form">
+    <div className="number-settings-form">
       <form onSubmit={handleSubmit}>
         <div className="settings-row">
           <label>
@@ -235,7 +306,7 @@ const SettingsForm = ({ onSave, initialSettings }) => {
             />
           </label>
         </div>
-        <button type="submit" className="button">Save Settings</button>
+        <button type="submit" className="number-setting-button-submit">Save Settings</button>
       </form>
       {showConfirmation && <div className="confirmation-message">Settings updated successfully!</div>}
     </div>

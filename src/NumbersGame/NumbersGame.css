@@ -1,76 +1,115 @@
-/* Apply a fun and colorful theme to the entire app */
-.App {
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.NumbersGame {
   text-align: center;
-  background-color: #f0f8ff; /* Light azure to make the game feel airy and open */
-  font-family: 'Comic Sans MS', 'Chalkboard SE', 'Arial', sans-serif; /* Playful font */
-  color: #333; /* Darker color for better readability */
-}
-
-/* Enhance the word grid (used for number display here) with more colors and interaction */
-.word-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr); /* Adjust to 5 for a better fit for numbers */
-  gap: 15px;
-  margin-bottom: 20px;
-  padding: 10px;
-  background-color: #e3f2fd; /* Light blue background for the grid area */
-  border-radius: 10px; /* Rounded corners for the grid container */
-}
-
-.animal-button {
-  padding: 20px 30px; /* Increase padding for larger buttons */
-  font-size: 24px; /* Increase font size for better visibility */
-  background-color: #64b5f6; /* Maintain blue color */
-  color: white; /* Text color */
-  border: none; /* No border for a cleaner look */
-  border-radius: 8px; /* Slightly larger rounded corners */
-  transition: transform 0.3s ease, background-color 0.3s; /* Smooth transitions for interaction */
-}
-
-.animal-button:hover {
-  transform: scale(1.05); /* Subtle scaling effect on hover */
-  background-color: #42a5f5; /* Slightly darker blue on hover */
-}
-
-.animal-button:active {
-  background-color: #1e88e5; /* Even darker blue for active state */
-}
-
-/* Styling for the area where numbers are displayed during memorization */
-.word-list {
+  font-family: 'Comic Sans MS', 'Chalkboard SE', 'Arial', sans-serif;
+  color: #333;
+  width: 100%;
+  height: 100%;
   display: flex;
-  flex-direction: column; /* Aligns items in a column */
-  align-items: center; /* Centers items horizontally */
-  margin: 20px 0;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-image: url('numbers_background.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
-.word-item {
-  font-size: 2em; /* Bigger size for memorization display */
-  margin: 10px 0; /* Adds space between numbers */
-  color: #64b5f6; /* Style numbers with the theme color */
+.numbers-instructions {
+  padding: 20px 30px;
+  font-size: 24px;
+  background-color: #f4c76e;
+  color: black;
+  border: none;
+  border-radius: 8px;
+  transition: transform 0.3s ease, background-color 0.3s;
 }
 
-/* Game over display */
+.number-button {
+  padding: 20px 30px;
+  font-size: 24px;
+  background-color: #f4c76e;
+  color: black;
+  border: none;
+  border-radius: 8px;
+  transition: transform 0.3s ease, background-color 0.3s;
+}
+
+.number-button:hover {
+  transform: scale(1.05);
+  background-color: #e3b160;
+}
+
+.number-button:active {
+  background-color: #d29b54;
+}
+
 .game-over-display {
-  background-color: #e3f2fd; /* Light blue background */
-  border-radius: 10px; /* Rounded corners */
+  background-color: #fde5b3;
+  border-radius: 10px;
   padding: 20px;
   margin: 20px 0;
 }
 
-/* Confirmation message styling */
-.confirmation-message {
-  color: green;
-  margin-top: 10px;
-  font-size: 16px;
-  font-weight: bold;
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
+  padding: 20px;
+  margin: 0 auto;
+  max-width: 90%;
+  margin-right: 11px;
+  margin-left: 11px;
 }
 
-.buttons {
-  display: grid;  /* Change from flex to grid for better control over layout */
-  grid-template-columns: repeat(5, 1fr); /* 5 columns for a single row of digits */
-  gap: 20px;  /* Increase gap for clearer separation */
-  padding: 20px; /* Padding around the grid area */
-  margin: 0 auto; /* Centering the grid horizontally */
-  max-width: 90%; /* Limiting maximum width to maintain proportionality */
+.number-grid-button {
+  padding: 20px 30px;
+  font-size: 24px;
+  background-color: #fde5b3;
+  color: black;
+  border: none;
+  border-radius: 8px;
+  transition: transform 0.3s ease, background-color 0.3s;
+  width: 100px;
+}
+
+.number-settings-form {
+  padding: 20px 30px;
+  font-size: 24px;
+  background-color: #f4c76e;
+  color: black;
+  border: none;
+  border-radius: 8px;
+  transition: transform 0.3s ease, background-color 0.3s;
+}
+.number-setting-button-submit {
+  padding: 20px 30px;
+  font-size: 24px;
+  background-color: #fde5b3;
+  color: black;
+  border: none;
+  border-radius: 8px;
+  transition: transform 0.3s ease, background-color 0.3s;
+  margin-top: 20px;
+}
+
+input {
+  background-color: #fde5b3;
+  border: 2px solid #e6bb6b;
+  border-radius: 5px;
+  padding: 5px;
+  font-size: 16px;
+  color: #000;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+input:focus {
+  outline: none;
+  border-color: #d29b54;
+  box-shadow: 0 0 8px rgba(210, 155, 84, 0.6);
 }
