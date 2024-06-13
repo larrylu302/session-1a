@@ -2,13 +2,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import './NumbersGame.css';
 import BackToHomeButton from '../Backtohomebutton';
 import volumeIcon from './volume_icon.png';
-import firstVideo from './numbers_first_video.mp4'
-import readInstructions from './decipher_password_voiceover.mp3'
+import readInstructions from './decipher_password_voiceover.mp3';
 import { Link } from 'react-router-dom';
 
-
 const NumbersGame = () => {
-  // Initial states for easier resets
   const initialGameState = {
     numberSequence: [],
     userSequence: [],
@@ -33,15 +30,14 @@ const NumbersGame = () => {
   const [settings, setSettings] = useState(initialSettings);
   const [showSettingsForm, setShowSettingsForm] = useState(false);
   const [gameStarted, setGameStarted] = useState(false);
-  const [videoWatched, setVideoWatched] = useState(false); // State to track video completion
   const [muted, setMuted] = useState(false);
   const audioRef = useRef(null);
 
   useEffect(() => {
-    if (audioRef.current && videoWatched && !gameStarted && !showSettingsForm) {
+    if (audioRef.current && !gameStarted && !showSettingsForm) {
       audioRef.current.play();
     }
-  }, [videoWatched, gameStarted, showSettingsForm]);
+  }, [gameStarted, showSettingsForm]);
 
   const startGame = () => {
     if (gameState.currentRound < settings.totalRounds) {
@@ -71,13 +67,11 @@ const NumbersGame = () => {
     setGameState(initialGameState);
     setGameStarted(false);
     setShowSettingsForm(false);
-    setVideoWatched(false); // Reset video state
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current.currentTime = 0;
     }
   };
-
 
   const generateSequence = (length) => {
     return Array.from({ length }, () => Math.floor(Math.random() * 10));
@@ -138,30 +132,11 @@ const NumbersGame = () => {
     }
   };
 
-
-  const handleVideoEnd = () => {
-    setVideoWatched(true);
-  };
-
-  const handleSkipVideo = () => {
-    setVideoWatched(true);
-  };
-
   return (
     <div className="NumbersGame">
       <BackToHomeButton />
 
-      {!videoWatched && (
-        <div className="video-container">
-          <div><video width="600" controls autoPlay playsInline onEnded={handleVideoEnd}>
-            <source src={firstVideo} type="video/mp4" />
-            Your browser does not support the video tag.
-          </video></div>
-          <button className="number-button" onClick={handleSkipVideo}>Skip Video</button>
-        </div>
-      )}
-
-      {videoWatched && !gameStarted && !showSettingsForm && (
+      {!gameStarted && !showSettingsForm && (
         <div>
           <div style={{ marginBottom: '50px', marginLeft:'30px', marginRight:'30px', paddingBottom:'70px' }} className='numbers-instructions'>
             <h1>Decipher the Secret Password</h1>
@@ -177,7 +152,7 @@ const NumbersGame = () => {
           </div>
           <audio ref={audioRef} src={readInstructions} muted={muted} />
           <button className="number-button" style={{ position: 'fixed', bottom: '10px', right: '10px' }} onClick={toggleMute}>
-          {muted ? 'Unmute' : 'Mute'}
+            {muted ? 'Unmute' : 'Mute'}
           </button>
         </div>
       )}

@@ -1,14 +1,15 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate hook from React Router
+import { useNavigate, useParams } from 'react-router-dom'; // Import useNavigate hook from React Router
 
 /**
  * BackToHomeButton component for navigating back to the home page.
  */
 const BackToHomeButton = () => {
   const navigate = useNavigate(); // Hook to access the navigate function
+  const {name, day} = useParams();
 
   const goToHome = () => {
-    navigate('/'); // Navigate back to the home page
+    navigate(`/${name}/${day}/home`); // Navigate back to the home page
   };
 
   return (

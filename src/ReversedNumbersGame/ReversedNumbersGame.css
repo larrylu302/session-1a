@@ -1,0 +1,121 @@
+html, body, #root {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  .ReversedNumbersGame {
+    text-align: center;
+    font-family: 'Comic Sans MS', 'Chalkboard SE', 'Arial', sans-serif;
+    color: #333;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-image: url('reversed_background.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  .numbers-instructions {
+    padding: 20px 30px;
+    font-size: 24px;
+    background-color: #A8A1A1;
+    color: black;
+    border: none;
+    border-radius: 8px;
+    transition: transform 0.3s ease, background-color 0.3s;
+    border: 2px solid white;
+  }
+
+  .gray-button {
+    padding: 20px 30px;
+    font-size: 24px;
+    background-color: #A8A1A1;
+    color: black;
+    border: none;
+    border-radius: 8px;
+    transition: transform 0.3s ease, background-color 0.3s;
+  }
+
+  .gray-button:hover {
+    transform: scale(1.05);
+    background-color: #8F8888;
+  }
+
+  .gray-button:active {
+    background-color: #C0BABA;
+  }
+
+  .game-over-display {
+    background-color: #fde5b3;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px 0;
+  }
+
+  .buttons {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+    padding: 20px;
+    margin: 0 auto;
+    max-width: 90%;
+    margin-right: 11px;
+    margin-left: 11px;
+  }
+
+  .number-grid-button {
+    padding: 20px 30px;
+    font-size: 24px;
+    background-color: #C0BABA;
+    color: black;
+    border: none;
+    border-radius: 8px;
+    transition: transform 0.3s ease, background-color 0.3s;
+    width: 100px;
+  }
+
+  .number-settings-form {
+    padding: 20px 30px;
+    font-size: 24px;
+    background-color: #A8A1A1;
+    color: black;
+    border: none;
+    border-radius: 8px;
+    transition: transform 0.3s ease, background-color 0.3s;
+  }
+  .number-setting-button-submit {
+    padding: 20px 30px;
+    font-size: 24px;
+    background-color: #C0BABA;
+    color: black;
+    border: none;
+    border-radius: 8px;
+    transition: transform 0.3s ease, background-color 0.3s;
+    margin-top: 20px;
+  }
+
+  .number-setting-button-submit:hover {
+    transform: scale(1.05);
+    background-color: #e3b160;
+  }
+
+  .gray-input {
+    background-color: #C0BABA;
+    border: 2px solid #8F8888;
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 16px;
+    color: #000;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+  }
+
+  .gray-input:focus {
+    outline: none;
+    border-color: #d29b54;
+    box-shadow: 0 0 8px rgba(210, 155, 84, 0.6);
+  }

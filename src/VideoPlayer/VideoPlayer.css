@@ -1,0 +1,29 @@
+.video-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    position: relative;
+    flex-direction: column;
+  }
+
+  .video-container video {
+    width: 100%;
+    max-width: 800px;
+  }
+
+  .skip-button {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #ff9900;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .skip-button:hover {
+    background-color: #cc7a00;
+  }
