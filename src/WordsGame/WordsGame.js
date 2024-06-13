@@ -19,11 +19,12 @@ const WordsGame = () => {
     };
 
     return (
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="word-settings-form">
         <div className="settings-row">
           <label>
             Number of Words:
             <input
+              className='green-input'
               type="number"
               value={localSettings.numWords}
               onChange={(e) => setLocalSettings({ ...localSettings, numWords: parseInt(e.target.value, 10) })}
@@ -34,6 +35,7 @@ const WordsGame = () => {
           <label>
             Memorization Time per Word (seconds):
             <input
+              className='green-input'
               type="number"
               value={localSettings.memorizationTimePerWord}
               onChange={(e) => setLocalSettings({ ...localSettings, memorizationTimePerWord: parseInt(e.target.value, 10) })}
@@ -44,13 +46,14 @@ const WordsGame = () => {
           <label>
             Number of Rounds:
             <input
+                className='green-input'
                 type="number"
                 value={localSettings.totalRounds}
                 onChange={(e) => setLocalSettings({ ...localSettings, totalRounds: parseInt(e.target.value, 10) })}
             />
           </label>
         </div>
-        <button type="submit" className="button">Save Settings</button>
+        <button type="submit" className="lighter-green-button" style={{marginTop: "20px", marginBottom: '15px'}}>Save Settings</button>
       </form>
     );
   };
@@ -70,9 +73,9 @@ const WordsGame = () => {
     totalRounds: 1,
     maxWordsRecalled: 0,
     initialSettings: {
-      numWords: 2,
+      numWords: 1,
       memorizationTimePerWord: 1,
-      totalRounds: 3
+      totalRounds: 1
     }
   });
 
@@ -116,10 +119,6 @@ const WordsGame = () => {
   };
 
   const startGame = () => {
-    if (gameState.currentRound > gameState.totalRounds) {
-      alert(`Game Over! Total Score: ${gameState.score}`);
-      return;
-    }
 
     const selectedWords = selectRandomWords(settings.numWords);
     setGameState(prevState => ({
@@ -225,7 +224,7 @@ const WordsGame = () => {
                 </button>
               ))}
             </div>
-            <button onClick={submitChoices}>Submit Selection</button>
+            <button onClick={submitChoices} className='green-button' >Submit Selection</button>
           </div>
         }
       </>
@@ -234,17 +233,17 @@ const WordsGame = () => {
 
   function renderGameOver() {
     return (
-      <div>
+      <div className='words-instructions'>
         <h2>Game Over</h2>
-        <div className="final-score">Final Score: {gameState.score}</div>
-        <div className="max-words-recalled">Max Words Recalled in One Round: {gameState.maxWordsRecalled}</div>
-        <div className="initial-settings" style={{marginBottom: '20px'}}>
+        <div>Final Score: {gameState.score}</div>
+        <div>Max Words Recalled in One Round: {gameState.maxWordsRecalled}</div>
+        <div className="initial-settings" style={{marginBottom: '20px', marginTop:'20px'}}>
           <strong>Initial Settings:</strong><br />
           Number of Words: {gameState.initialSettings.numWords}<br />
           Memorization Time per Word: {gameState.initialSettings.memorizationTimePerWord}<br />
           Total Rounds: {gameState.initialSettings.totalRounds}
         </div>
-        <button className="button" onClick={startOver}>Start Over</button>
+        <button className="lighter-green-button" onClick={startOver}>Start Over</button>
       </div>
     );
   }
@@ -261,18 +260,18 @@ const WordsGame = () => {
   function renderInitialView() {
     return (
       <>
-        <div style={{ marginBottom: '30px' }} className='animal-button'>
+        <div style={{ marginBottom: '30px' }} className='words-instructions'>
           <h1>Word Recall</h1>
-Directions: You will be presented with several words. Your job is to remember these words in order and select tiles with those words in the exact same order that they were presented.
+            Directions: You will be presented with several words. Your job is to remember these words in order and select tiles with those words in the exact same order that they were presented.
 
-<div style={{paddingTop:'20px'}}>But be careful! You cannot change your answers once you’ve selected a tile. Choose wisely. The fate of the multiverse depends on you!</div>
+          <div style={{paddingTop:'20px'}}>But be careful! You cannot change your answers once you’ve selected a tile. Choose wisely. The fate of the multiverse depends on you!</div>
 
-</div>
-        <button className="button" onClick={() => {
+        </div>
+        <button className="green-button" onClick={() => {
           setShowSettingsForm(true);
           setGameState(prev => ({ ...prev, showInitial: false }))
         }}>Settings</button>
-        <button className="button" onClick={startGame}>Start Game</button>
+        <button className="green-button" onClick={startGame}>Start Game</button>
       </>
     );
   }

@@ -4,7 +4,7 @@ import BackToHomeButton from '../Backtohomebutton';
 import volumeIcon from './volume_icon.png';
 import firstVideo from './numbers_first_video.mp4'
 import readInstructions from './decipher_password_voiceover.mp3'
-
+import { Link } from 'react-router-dom';
 
 
 const NumbersGame = () => {
@@ -261,6 +261,7 @@ const SettingsForm = ({ onSave, initialSettings }) => {
           <label>
             Number of Digits:
             <input
+              className='orange-input'
               type="number"
               min="1"
               max="10"
@@ -273,6 +274,7 @@ const SettingsForm = ({ onSave, initialSettings }) => {
           <label>
             Interval Between Digits (seconds):
             <input
+              className='orange-input'
               type="number"
               min="0.5"
               max="5"
@@ -286,6 +288,7 @@ const SettingsForm = ({ onSave, initialSettings }) => {
           <label>
             Time Before Test (seconds):
             <input
+              className='orange-input'
               type="number"
               min="1"
               max="10"
@@ -298,6 +301,7 @@ const SettingsForm = ({ onSave, initialSettings }) => {
           <label>
             Total Rounds:
             <input
+              className='orange-input'
               type="number"
               min="1"
               max="10"
