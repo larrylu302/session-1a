@@ -55,8 +55,8 @@ const CategoriesGame = () => {
               type="number"
               max={60}
               min={0}
-              value={localSettings.memorizationTime}
-              onChange={(e) => setLocalSettings({ ...localSettings, memorizationTime: parseInt(e.target.value, 10) })}
+              value={localSettings.waitTime}
+              onChange={(e) => setLocalSettings({ ...localSettings, waitTime: parseInt(e.target.value, 10) })}
             />
           </label>
         </div>
@@ -93,7 +93,7 @@ const CategoriesGame = () => {
     maxWordsRecalled: 0,
     initialSettings: {
         numCategories: 3,
-        memorizationTimePerWord: 0,
+        waitTime: 0,
         showCategoryLabel: true,
         totalRounds: 1
       }  
@@ -142,7 +142,7 @@ const CategoriesGame = () => {
 
     setTimeout(() => {
       setGameState(prevState => ({ ...prevState, showChoices: true }));
-    }, settings.memorizationTime * 1000);
+    }, settings.waitTime * 1000);
   };
 
   useEffect(() => {
@@ -165,7 +165,6 @@ const CategoriesGame = () => {
     }
     return array;
   };
-  
 
   const selectRandomWords = (numCategories) => {
     const categoryKeys = Object.keys(CATEGORIES);
@@ -173,17 +172,16 @@ const CategoriesGame = () => {
     const selectedCategoryKeys = shuffledCategoryKeys.slice(0, numCategories);
     const selectedWords = [];
     const selectedCategories = [];
-  
+
     selectedCategoryKeys.forEach(categoryKey => {
       const category = CATEGORIES[categoryKey];
       const shuffledWords = shuffleArray([...category]);
       selectedWords.push(...shuffledWords.slice(0, 5));
       selectedCategories.push(categoryKey);
     });
-  
+
     return { selectedWords: shuffleArray(selectedWords), categories: selectedCategories };
   };
-  
 
   const handleChoice = (word) => {
     setGameState(prevState => ({
@@ -240,6 +238,10 @@ const CategoriesGame = () => {
 
   const [showSettingsForm, setShowSettingsForm] = useState(false);
 
+  const canSubmitChoices = () => {
+    return gameState.userChoices.every(choices => choices.length === 5);
+  };
+
   return (
     <div className="CategoriesGame">
       <BackToHomeButton />
@@ -289,7 +291,7 @@ const CategoriesGame = () => {
                 </button>
               ))}
             </div>
-            <button onClick={submitChoices} className='green-button'>Recall</button>
+            <button onClick={submitChoices} className='green-button' disabled={!canSubmitChoices()}>Recall</button>
           </div>
         }
       </>
@@ -305,7 +307,7 @@ const CategoriesGame = () => {
         <div className="initial-settings" style={{ marginBottom: '20px', marginTop: '20px' }}>
           <strong>Initial Settings:</strong><br />
           Number of Categories: {gameState.initialSettings.numCategories}<br />
-          Memorization Time per Word: {gameState.initialSettings.memorizationTimePerWord}<br />
+          Wait Time: {gameState.initialSettings.waitTime}<br />
           Total Rounds: {gameState.initialSettings.totalRounds}
         </div>
         <button className="lighter-green-button" onClick={startOver}>Start Over</button>
@@ -341,3 +343,4 @@ const CategoriesGame = () => {
 };
 
 export default CategoriesGame;
+

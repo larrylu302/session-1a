@@ -37,6 +37,12 @@ html, body, #root {
   background-color: #42a5f5;
 }
 
+.green-button:disabled{
+  background-color: gray;
+  color: black;
+  cursor: not-allowed;
+}
+
 .lighter-green-button {
   padding: 15px;
   font-size: 1.2em;
@@ -126,7 +132,7 @@ html, body, #root {
 }
 
 .category-header th {
-  padding-bottom: 20px; /* Increase padding at the bottom of the header */
+  padding-bottom: 20px;
 }
 
 .category-header {
