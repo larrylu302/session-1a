@@ -1,0 +1,202 @@
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.CategoriesGame {
+  text-align: center;
+  font-family: 'Comic Sans MS', 'Chalkboard SE', 'Arial', sans-serif;
+  color: #333;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-image: url('Words-background.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.green-button {
+  padding: 15px;
+  margin-bottom: 15px;
+  font-size: 1.2em;
+  cursor: pointer;
+  background-color: #566b21;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.green-button:hover {
+  transform: scale(1.1);
+  background-color: #42a5f5;
+}
+
+.lighter-green-button {
+  padding: 15px;
+  font-size: 1.2em;
+  cursor: pointer;
+  background-color: #789945;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.lighter-green-button:hover {
+  transform: scale(1.1);
+  background-color: #42a5f5;
+}
+
+.words-instructions {
+  padding: 20px 30px;
+  font-size: 24px;
+  background-color: #566b21;
+  color: white;
+  border: 2px solid white;
+  border-radius: 8px;
+  transition: transform 0.3s ease, background-color 0.3s;
+  margin-bottom: 50px;
+  margin-left: 30px;
+  margin-right: 30px;
+  padding-bottom: 70px;
+}
+
+.word-settings-form {
+  padding: 20px 30px;
+  font-size: 24px;
+  background-color: #566b21;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  transition: transform 0.3s ease, background-color 0.3s;
+}
+
+.green-input {
+  background-color: #789945;
+  border: 2px solid #566b21;
+  border-radius: 5px;
+  padding: 5px;
+  font-size: 16px;
+  color: white;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.green-input:focus {
+  outline: none;
+  border-color: #789945;
+  box-shadow: 0 0 8px rgba(210, 155, 84, 0.6);
+}
+
+.game-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px;
+  margin-top: 100px;
+}
+
+.categories-container {
+  display: flex;
+  background-color: #566b21;
+  border-radius: 10px;
+  justify-content: space-around;
+  width: 100%;
+  border: none;
+  flex-wrap: wrap;
+}
+
+.category-table {
+  margin: 10px;
+  margin-top: 20px;
+}
+
+.category-header {
+  padding: 10px;
+  font-size: 1.2em;
+  cursor: pointer;
+  background-color: #789945;
+  color: white;
+  border-radius: 5px;
+}
+
+.category-header th {
+  padding-bottom: 20px; /* Increase padding at the bottom of the header */
+}
+
+.category-header {
+  display: table-header-group;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #789945;
+  text-align: center;
+  padding: 10px;
+  cursor: pointer;
+  border: none;
+  color: white;
+  margin: 5px;
+  height: 20px; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 150px;
+  font-size: 1.2em;
+}
+
+.category-header th {
+  padding-bottom: 20px;
+}
+
+.category-cell {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #789945;
+  text-align: center;
+  padding: 10px;
+  cursor: pointer;
+  border: none;
+  color: white;
+  margin: 5px;
+  height: 20px; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 150px;
+}
+
+.word-bank {
+  margin: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.word-button {
+  border: none;
+  border-radius: 5px;
+  background-color: #789945;
+  color: white;
+  margin: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2em;
+}
+
+.selected {
+  background-color: #566b21;
+}
+
+.grayed-out {
+  background-color: gray;
+  color: black;
+  cursor: not-allowed;
+}

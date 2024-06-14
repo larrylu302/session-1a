@@ -5,6 +5,7 @@ import HomePage from './HomePage/HomePage';
 import WordsGame from './WordsGame/WordsGame';
 import FinalScore from './FinalScore/FinalScore';
 import NumbersGame from './NumbersGame/NumbersGame';
+import CategoriesGame from './CategoriesGame/CategoriesGame';
 import VideoPlayer from './VideoPlayer/VideoPlayer';
 import './App.css';
 import Calendar from './Calendar/Calendar';
@@ -34,7 +35,7 @@ function App() {
           <Route path=":name/:day/final-score" element={<FinalScore />} />
           <Route path=":name/:day/numbers-game" element={<NumbersGame updateScore={updateScore}/>} />
           <Route path=":name/:day/reversed-numbers-game" element={<ReversedNumbersGame updateScore={updateScore}/>} />
-          <Route path=":name/:day/categories-game" element={<ReversedNumbersGame />} />
+          <Route path=":name/:day/categories-game" element={<CategoriesGame />} />
           <Route path=":name/:day/home" element={<HomePage scores={scores} />} />
           <Route path=":name/:day/:video" element={<VideoPlayer />} />
         </Routes>
