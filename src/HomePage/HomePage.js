@@ -15,7 +15,7 @@ const HomePage = () => {
 
     <div className="homepage-container">
       <h1 className="title">Teen Memory Game</h1>
-      <div>{name} & {day}</div>
+      <div className="title">{name} - Day {day}</div>
       <div className="games-grid">
         <Link to={`/${name}/${day}/words-game`} className="game-button words-game">Words</Link>
         <Link to={`/${name}/${day}/numbers-game`} className="game-button digits-game">Decipher the Secret Code</Link>
