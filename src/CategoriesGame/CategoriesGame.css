@@ -14,7 +14,7 @@ html, body, #root {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-image: url('Words-background.png');
+  background-image: url('categories_background.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -25,9 +25,9 @@ html, body, #root {
   margin-bottom: 15px;
   font-size: 1.2em;
   cursor: pointer;
-  background-color: #566b21;
-  color: white;
-  border: none;
+  background-color: #bbfac3;
+  color: black;
+  border: 2px solid black;
   border-radius: 5px;
   transition: transform 0.3s ease, background-color 0.3s ease;
 }
@@ -47,9 +47,9 @@ html, body, #root {
   padding: 15px;
   font-size: 1.2em;
   cursor: pointer;
-  background-color: #789945;
-  color: white;
-  border: none;
+  background-color: #339c2d;
+  color: black;
+  border: 2px solid black;
   border-radius: 5px;
   transition: transform 0.3s ease, background-color 0.3s ease;
 }
@@ -62,9 +62,9 @@ html, body, #root {
 .words-instructions {
   padding: 20px 30px;
   font-size: 24px;
-  background-color: #566b21;
-  color: white;
-  border: 2px solid white;
+  background-color: #bbfac3;
+  color: black;
+  border: 2px solid black;
   border-radius: 8px;
   transition: transform 0.3s ease, background-color 0.3s;
   margin-bottom: 50px;
@@ -76,26 +76,26 @@ html, body, #root {
 .word-settings-form {
   padding: 20px 30px;
   font-size: 20px;
-  background-color: #566b21;
-  color: white;
-  border: none;
+  background-color: #bbfac3;
+  color: black;
+  border: 2px solid black;
   border-radius: 8px;
   transition: transform 0.3s ease, background-color 0.3s;
 }
 
 .green-input {
-  background-color: #789945;
-  border: 2px solid #566b21;
+  background-color: #bbfac3;
+  border: 2px solid black;
   border-radius: 5px;
   padding: 5px;
   font-size: 16px;
-  color: white;
+  color: black;
   box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
 }
 
 .green-input:focus {
   outline: none;
-  border-color: #789945;
+  border-color: #bbfac3;
   box-shadow: 0 0 8px rgba(210, 155, 84, 0.6);
 }
 
@@ -109,11 +109,11 @@ html, body, #root {
 
 .categories-container {
   display: flex;
-  background-color: #566b21;
+  background-color: #339c2d;
   border-radius: 10px;
   justify-content: space-around;
   width: 100%;
-  border: none;
+  border: 2px solid black;
   flex-wrap: wrap;
 }
 
@@ -126,8 +126,8 @@ html, body, #root {
   padding: 10px;
   font-size: 1.2em;
   cursor: pointer;
-  background-color: #789945;
-  color: white;
+  background-color: #bbfac3;
+  color: black;
   border-radius: 5px;
 }
 
@@ -139,12 +139,12 @@ html, body, #root {
   display: table-header-group;
   border: 1px solid #ddd;
   border-radius: 5px;
-  background-color: #789945;
+  background-color: #bbfac3;
   text-align: center;
   padding: 10px;
   cursor: pointer;
-  border: none;
-  color: white;
+  border: 2px solid black;
+  color: black;
   margin: 5px;
   height: 20px; 
   display: flex;
@@ -161,12 +161,12 @@ html, body, #root {
 .category-cell {
   border: 1px solid #ddd;
   border-radius: 5px;
-  background-color: #789945;
+  background-color: #bbfac3;
   text-align: center;
   padding: 10px;
   cursor: pointer;
-  border: none;
-  color: white;
+  border: 2px solid black;
+  color: black;
   margin: 5px;
   height: 20px; 
   display: flex;
@@ -183,10 +183,10 @@ html, body, #root {
 }
 
 .word-button {
-  border: none;
+  border: 2px solid black;
   border-radius: 5px;
-  background-color: #789945;
-  color: white;
+  background-color: #bbfac3;
+  color: black;
   margin: 5px;
   padding: 10px 20px;
   cursor: pointer;
@@ -198,7 +198,7 @@ html, body, #root {
 }
 
 .selected {
-  background-color: #566b21;
+  background-color: #339c2d;
 }
 
 .grayed-out {
@@ -210,21 +210,21 @@ html, body, #root {
 .wait-time-text {
   margin-bottom: 20px;
   font-size: 50px;
-  color: #566b21; 
+  color: #339c2d; 
 }
 
 input[type="radio"].green-input,
 input[type="checkbox"].green-input {
   appearance: none;
-  margin: 0;
+  margin: 10;
   font: inherit;
-  color: #566b21;
-  width: 1.15em;
-  height: 1.15em;
-  border: 0.15em solid currentColor;
+  color: #339c2d;
+  width: 1em;
+  height: 1em;
   display: inline-grid;
   place-content: center;
-  background-color: #789945;
+  background-color: #bbfac3;
+  border: 2px solid black
 }
 
 input[type="radio"].green-input {
@@ -237,21 +237,21 @@ input[type="checkbox"].green-input {
 
 input[type="radio"].green-input::before {
   content: "";
-  width: 0.65em;
-  height: 0.65em;
+  width: 0.5em;
+  height: 0.5em;
   border-radius: 50%;
   transform: scale(0);
   transition: 120ms transform ease-in-out;
-  box-shadow: inset 1em 1em #566b21;
+  box-shadow: inset 1em 1em #339c2d;
 }
 
 input[type="checkbox"].green-input::before {
   content: "";
-  width: 0.65em;
-  height: 0.65em;
+  width: 0.5em;
+  height: 0.5em;
   transform: scale(0);
   transition: 120ms transform ease-in-out;
-  box-shadow: inset 1em 1em #566b21;
+  box-shadow: inset 1em 1em #339c2d;
 }
 
 input[type="radio"].green-input:checked::before,
@@ -276,5 +276,14 @@ input[type="checkbox"].green-input:checked::before {
   margin-right: 10px;
 }
 
+.word-selector {
+  width: 200px;
+  height: 40px;
+  border: 2px solid black
+}
+
+.word-selector value{
+  font-size: 20px;
+}
 
 

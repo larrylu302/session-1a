@@ -238,15 +238,15 @@ const CategoriesGame = () => {
     }));
   };
 
-  const handleCategoryClick = (categoryIndex) => {
+  const handleCategoryClick = (categoryIndex, rowIndex) => {
     if (gameState.selectedWord) {
       const category = gameState.selectedCategories[categoryIndex];
       const correctWordsForCategory = CATEGORIES[category];
       if (correctWordsForCategory.includes(gameState.selectedWord)) {
         setGameState(prevState => {
           const newChoices = [...prevState.userChoices];
-          if (newChoices[categoryIndex].length < 5 && !newChoices[categoryIndex].includes(gameState.selectedWord)) {
-            newChoices[categoryIndex] = [...newChoices[categoryIndex], gameState.selectedWord];
+          if (!newChoices[categoryIndex].includes(gameState.selectedWord)) {
+            newChoices[categoryIndex][rowIndex] = gameState.selectedWord;
             return {
               ...prevState,
               userChoices: newChoices,
@@ -295,19 +295,7 @@ const CategoriesGame = () => {
     return gameState.userChoices.every(choices => choices.length === 5);
   };
 
-  return (
-    <div className="CategoriesGame">
-      <BackToHomeButton />
-      {gameState.currentRound <= gameState.totalRounds && renderFirstGameUI()}
-      {gameState.currentRound > gameState.totalRounds && renderGameOver()}
-      {showSettingsForm && renderSettingsForm()}
-      {gameState.showInitial && renderInitialView()}
-      {gameState.showWaitTime && renderWaitTime()}
-      {gameState.showSecondChoices && renderSecondGameUI()}
-    </div>
-  );
-
-  function renderFirstGameUI() {
+  const renderFirstGameUI = () => {
     return (
       <>
         {gameState.showChoices &&
@@ -325,7 +313,7 @@ const CategoriesGame = () => {
                       <tr key={rowIndex}>
                         <td
                           className="category-cell"
-                          onClick={() => handleCategoryClick(categoryIndex)}
+                          onClick={() => handleCategoryClick(categoryIndex, rowIndex)}
                         >
                           {gameState.userChoices[categoryIndex][rowIndex] || ''}
                         </td>
@@ -351,9 +339,30 @@ const CategoriesGame = () => {
         }
       </>
     );
-  }
+  };
 
-  function renderSecondGameUI() {
+  const renderSecondGameUI = () => {
+    const allWords = Object.values(CATEGORIES).flat().sort();
+    const handleDropdownChange = (e) => {
+      const selectedWord = e.target.value;
+      handleChoice(selectedWord);
+      e.target.value = '';
+    };
+
+    const renderCellContent = (categoryIndex, rowIndex) => {
+      if (settings.mode === 'Medium' || settings.mode === 'Hard') {
+        return '';
+      }
+      if (settings.mode === 'Easy') {
+        const isFirstEmptyCell = rowIndex === 0 && gameState.userChoices[categoryIndex].length === 0;
+        if (isFirstEmptyCell) {
+          return CATEGORIES[gameState.selectedCategories[categoryIndex]][0];
+        }
+        return gameState.userChoices[categoryIndex][rowIndex] || '';
+      }
+      return '';
+    };
+
     return (
       <>
         {gameState.showSecondChoices &&
@@ -363,7 +372,9 @@ const CategoriesGame = () => {
                 <table key={categoryIndex} className="category-table">
                   <thead>
                     <tr>
-                      <th className="category-header">{settings.showCategoryLabel ? category : `Category ${categoryIndex + 1}`}</th>
+                      <th className="category-header">
+                        {settings.mode === 'Easy' ? category : ''}
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
@@ -371,9 +382,9 @@ const CategoriesGame = () => {
                       <tr key={rowIndex}>
                         <td
                           className="category-cell"
-                          onClick={() => handleCategoryClick(categoryIndex)}
+                          onClick={() => handleCategoryClick(categoryIndex, rowIndex)}
                         >
-                          {gameState.userChoices[categoryIndex][rowIndex] || ''}
+                          {renderCellContent(categoryIndex, rowIndex)}
                         </td>
                       </tr>
                     ))}
@@ -382,51 +393,55 @@ const CategoriesGame = () => {
               ))}
             </div>
             <div className="word-bank">
-              {gameState.correctWords.map((word, index) => (
-                <button
-                  key={index}
-                  className={`word-button ${gameState.selectedWord === word ? 'selected' : ''} ${gameState.userChoices.flat().includes(word) ? 'grayed-out' : ''}`}
-                  onClick={() => handleChoice(word)}
-                  disabled={gameState.userChoices.flat().includes(word)}>
-                  {word}
-                </button>
-              ))}
+              <select onChange={handleDropdownChange} className="word-selector">
+                <option value="">Select a word</option>
+                {allWords.map((word, index) => (
+                  <option key={index} value={word} disabled={gameState.userChoices.flat().includes(word)}>
+                    {word}
+                  </option>
+                ))}
+                {gameState.selectedCategories.map((category, index) => (
+                  <option key={index + allWords.length} value={category} disabled={gameState.userChoices.flat().includes(category)}>
+                    {category}
+                  </option>
+                ))}
+              </select>
             </div>
             <button onClick={submitFinalChoices} className='green-button'>Submit Selection</button>
           </div>
         }
       </>
     );
-  }
+  };
 
-  function renderGameOver() {
+  const renderGameOver = () => {
     return (
       <div className='words-instructions'>
         <h2>Game Over</h2>
         <div>Final Score: {gameState.score}</div>
-        <div>Max Words Recalled in One Round: {gameState.maxWordsRecalled}</div>
+        <div>Max Words Recalled in a Category: {gameState.maxWordsRecalled}</div>
         <div className="initial-settings" style={{ marginBottom: '20px', marginTop: '20px' }}>
           <strong>Initial Settings:</strong><br />
           Number of Categories: {gameState.initialSettings.numCategories}<br />
-          Wait Time: {gameState.initialSettings.waitTime}<br />
-          Total Rounds: {gameState.initialSettings.totalRounds}<br />
-          Mode: {gameState.initialSettings.mode}
+          Wait Time: {gameState.initialSettings.waitTime} seconds<br />
+          Mode: {gameState.initialSettings.mode}<br />
+          Category Label Shown: {gameState.initialSettings.showCategoryLabel ? 'Yes' : 'No'}
         </div>
         <button className="lighter-green-button" onClick={startOver}>Start Over</button>
       </div>
     );
-  }
+  };
 
-  function renderSettingsForm() {
+  const renderSettingsForm = () => {
     return (
       <SettingsForm
         onSave={(newSettings) => setSettings(newSettings)}
         initialSettings={settings}
       />
     );
-  }
+  };
 
-  function renderInitialView() {
+  const renderInitialView = () => {
     return (
       <>
         <div style={{ marginBottom: '30px' }} className='words-instructions'>
@@ -441,9 +456,9 @@ const CategoriesGame = () => {
         <button className="green-button" onClick={startGame}>Start Game</button>
       </>
     );
-  }
+  };
 
-  function renderWaitTime() {
+  const renderWaitTime = () => {
     return (
       <div className="wait-time-screen">
         <div className="wait-time-text">
@@ -451,7 +466,19 @@ const CategoriesGame = () => {
         </div>
       </div>
     );
-  }
+  };
+
+  return (
+    <div className="CategoriesGame">
+      <BackToHomeButton />
+      {gameState.currentRound <= gameState.totalRounds && renderFirstGameUI()}
+      {gameState.currentRound > gameState.totalRounds && renderGameOver()}
+      {showSettingsForm && renderSettingsForm()}
+      {gameState.showInitial && renderInitialView()}
+      {gameState.showWaitTime && renderWaitTime()}
+      {gameState.showSecondChoices && renderSecondGameUI()}
+    </div>
+  );
 };
 
 export default CategoriesGame;
