@@ -213,4 +213,68 @@ html, body, #root {
   color: #566b21; 
 }
 
+input[type="radio"].green-input,
+input[type="checkbox"].green-input {
+  appearance: none;
+  margin: 0;
+  font: inherit;
+  color: #566b21;
+  width: 1.15em;
+  height: 1.15em;
+  border: 0.15em solid currentColor;
+  display: inline-grid;
+  place-content: center;
+  background-color: #789945;
+}
+
+input[type="radio"].green-input {
+  border-radius: 50%;
+}
+
+input[type="checkbox"].green-input {
+  border-radius: 0.25em;
+}
+
+input[type="radio"].green-input::before {
+  content: "";
+  width: 0.65em;
+  height: 0.65em;
+  border-radius: 50%;
+  transform: scale(0);
+  transition: 120ms transform ease-in-out;
+  box-shadow: inset 1em 1em #566b21;
+}
+
+input[type="checkbox"].green-input::before {
+  content: "";
+  width: 0.65em;
+  height: 0.65em;
+  transform: scale(0);
+  transition: 120ms transform ease-in-out;
+  box-shadow: inset 1em 1em #566b21;
+}
+
+input[type="radio"].green-input:checked::before,
+input[type="checkbox"].green-input:checked::before {
+  transform: scale(1);
+}
+
+.settings-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.settings-row label {
+  display: flex;
+  align-items: center;
+}
+
+.settings-row div {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+}
+
+
 
