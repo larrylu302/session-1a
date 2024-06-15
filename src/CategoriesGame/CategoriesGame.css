@@ -75,7 +75,7 @@ html, body, #root {
 
 .word-settings-form {
   padding: 20px 30px;
-  font-size: 24px;
+  font-size: 20px;
   background-color: #566b21;
   color: white;
   border: none;
@@ -206,3 +206,11 @@ html, body, #root {
   color: black;
   cursor: not-allowed;
 }
+
+.wait-time-text {
+  margin-bottom: 20px;
+  font-size: 50px;
+  color: #566b21; 
+}
+
+
