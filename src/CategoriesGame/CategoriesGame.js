@@ -318,7 +318,7 @@ const CategoriesGame = () => {
 
   // Check if all choices have been made
   const canSubmitChoices = () => {
-    return gameState.userChoices.every((choices) => choices.length === 5);
+    return gameState.userChoices.every((choices) => choices.every((choice) => choice));
   };
 
   // Render first part of the game UI
@@ -476,13 +476,13 @@ const CategoriesGame = () => {
         <div className="initial-settings" style={{ marginBottom: "20px", marginTop: "20px" }}>
           <strong>Initial Settings:</strong>
           <br />
-          Number of Categories: {gameState.initialSettings.numCategories}
+          Number of Categories: {settings.numCategories}
           <br />
-          Wait Time: {gameState.initialSettings.waitTime} seconds
+          Wait Time: {settings.waitTime} {settings.waitTime === 1 ? 'second' : 'seconds'}
           <br />
           Category Label Shown: {gameState.initialSettings.showCategoryLabel ? "Yes" : "No"}
           <br />
-          Total Rounds: {gameState.initialSettings.totalRounds}
+          Total Rounds: {settings.totalRounds}
         </div>
         <button className="lighter-green-button" onClick={startOver}>
           Start Over
