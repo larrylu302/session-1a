@@ -282,8 +282,4 @@ input[type="checkbox"].green-input:checked::before {
   border: 2px solid black
 }
 
-.word-selector value{
-  font-size: 20px;
-}
-
 

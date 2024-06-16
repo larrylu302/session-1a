@@ -165,7 +165,7 @@ const CategoriesGame = () => {
   const processResult = () => {
     const score = gameState.correctWords.reduce(
       (acc, word, index) =>
-        acc + (gameState.userChoices[index] === word ? 1 : 0),
+        acc + (gameState.userChoices.flat().includes(word) ? 1 : 0),
       0
     );
     const isCorrect = score === gameState.correctWords.length;
@@ -377,12 +377,12 @@ const CategoriesGame = () => {
     if (gameState.selectedWord) {
       setGameState((prevState) => {
         const newChoices = [...prevState.userChoices];
-        if (!newChoices[categoryIndex][rowIndex]) {
+        if (!newChoices[categoryIndex][rowIndex] && !prevState.userChoices.flat().includes(gameState.selectedWord)) {
           newChoices[categoryIndex][rowIndex] = gameState.selectedWord;
           return {
             ...prevState,
             userChoices: newChoices,
-            selectedWord: null,
+            selectedWord: "",
           };
         }
         return prevState;
@@ -425,10 +425,7 @@ const CategoriesGame = () => {
               ))}
             </div>
             <div className="word-bank">
-              <select onChange={handleDropdownChange} className="word-selector" value={gameState.selectedWord || ""}>
-                <option value="" disabled>
-                  Select a word
-                </option>
+              <select onChange={handleDropdownChange} className="word-selector" value={gameState.selectedWord || allWords[0]}>
                 {allWords.map((word, index) => (
                   <option key={index} value={word} disabled={gameState.userChoices.flat().includes(word)}>
                     {word}
@@ -436,7 +433,7 @@ const CategoriesGame = () => {
                 ))}
               </select>
             </div>
-            <button onClick={submitFinalChoices} className="green-button">
+            <button onClick={submitFinalChoices} className="green-button" disabled={!canSubmitChoices()}>
               Submit Selection
             </button>
           </div>
