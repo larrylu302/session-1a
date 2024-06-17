@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/hfhs-memory-game/static/css/main.1f7eccb9.css",
-    "main.js": "/hfhs-memory-game/static/js/main.3849372a.js",
+    "main.css": "/hfhs-memory-game/static/css/main.60e83c98.css",
+    "main.js": "/hfhs-memory-game/static/js/main.5137d9d6.js",
     "static/js/453.58d809e6.chunk.js": "/hfhs-memory-game/static/js/453.58d809e6.chunk.js",
     "static/media/w4_v1.mp4": "/hfhs-memory-game/static/media/w4_v1.728fc3e198ce22f2ed1a.mp4",
     "static/media/w8v1.mp4": "/hfhs-memory-game/static/media/w8v1.c5369a2ff9c45d2ecae3.mp4",
@@ -28,17 +28,20 @@
     "static/media/w11v2.mp4": "/hfhs-memory-game/static/media/w11v2.99052da090205631b0f6.mp4",
     "static/media/w1_v2.mp4": "/hfhs-memory-game/static/media/w1_v2.15ebd86545116caed4a1.mp4",
     "static/media/Words-background.png": "/hfhs-memory-game/static/media/Words-background.e8a834e0f846a14bd032.png",
+    "static/media/cal_background.jpg": "/hfhs-memory-game/static/media/cal_background.c3a781ef018739aa2290.jpg",
     "static/media/decipher_password_voiceover.mp3": "/hfhs-memory-game/static/media/decipher_password_voiceover.ad2e6d1b5dae8db93c46.mp3",
     "static/media/unscramble_voiceover.mp3": "/hfhs-memory-game/static/media/unscramble_voiceover.9b085fa7142fa2ffd95d.mp3",
+    "static/media/categories_background.png": "/hfhs-memory-game/static/media/categories_background.6b44b1b96e1215651f04.png",
     "static/media/numbers_background.png": "/hfhs-memory-game/static/media/numbers_background.85ec7644c2169f7cbed5.png",
     "static/media/reversed_background.png": "/hfhs-memory-game/static/media/reversed_background.20fe5d58202eeb80dbdf.png",
+    "static/media/home_background.png": "/hfhs-memory-game/static/media/home_background.4bdcb8d04454b62e6512.png",
     "index.html": "/hfhs-memory-game/index.html",
-    "main.1f7eccb9.css.map": "/hfhs-memory-game/static/css/main.1f7eccb9.css.map",
-    "main.3849372a.js.map": "/hfhs-memory-game/static/js/main.3849372a.js.map",
+    "main.60e83c98.css.map": "/hfhs-memory-game/static/css/main.60e83c98.css.map",
+    "main.5137d9d6.js.map": "/hfhs-memory-game/static/js/main.5137d9d6.js.map",
     "453.58d809e6.chunk.js.map": "/hfhs-memory-game/static/js/453.58d809e6.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.1f7eccb9.css",
-    "static/js/main.3849372a.js"
+    "static/css/main.60e83c98.css",
+    "static/js/main.5137d9d6.js"
   ]
 }
