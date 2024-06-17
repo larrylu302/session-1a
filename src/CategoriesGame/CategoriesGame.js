@@ -327,6 +327,8 @@ const CategoriesGame = () => {
       <>
         {gameState.showChoices && (
           <div className="game-container">
+            <h2>Place each word in the correct category. You will not be able to place a word in the incorrect category, and can take
+              as much time as you need before moving on. Press "Recall" when you are ready.</h2>
             <div className="categories-container">
               {gameState.selectedCategories.map((category, categoryIndex) => (
                 <table key={categoryIndex} className="category-table">
@@ -402,6 +404,7 @@ const CategoriesGame = () => {
       <>
         {gameState.showSecondChoices && (
           <div className="game-container">
+            <h2>Navigate through the words and assign the correct words to the correct category. You will not be able to go back one a word is assigned, so choose carefully. Press "Submit Selection" when you are done.</h2>
             <div className="categories-container">
               {gameState.selectedCategories.map((category, categoryIndex) => (
                 <table key={categoryIndex} className="category-table">
@@ -425,7 +428,10 @@ const CategoriesGame = () => {
               ))}
             </div>
             <div className="word-bank">
-              <select onChange={handleDropdownChange} className="word-selector" value={gameState.selectedWord || allWords[0]}>
+              <select onChange={handleDropdownChange} className="word-selector" value={gameState.selectedWord}>
+              <option value="" disabled>
+                Select a Word
+              </option>
                 {allWords.map((word, index) => (
                   <option key={index} value={word} disabled={gameState.userChoices.flat().includes(word)}>
                     {word}
