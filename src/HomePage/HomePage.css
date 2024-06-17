@@ -1,11 +1,22 @@
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
 .homepage-container {
     text-align: center;
-    padding: 20px;
+    width: 100%;
+    height: 100%;
+    background-image: url('home_background.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
   }
 
-  .title {
+  .home-title {
     margin-bottom: 20px;
-    color: #004d99; /* A friendly blue for the title */
+    color: rgb(21, 67, 252);
     font-family: 'Comic Sans MS', 'Comic Sans', cursive; /* A font style often associated with children */
   }
 
@@ -20,7 +31,7 @@
   .game-button {
     padding: 20px;
     border-radius: 10px;
-    color: white;
+    color: black;
     font-size: 24px;
     font-family: 'Comic Sans MS', 'Comic Sans', cursive;
     text-decoration: none; /* Removes the underline from links */
@@ -31,11 +42,11 @@
   }
 
   .words-game {
-    background-color: #ff9999; /* A soft red */
+    background-color: #9999ff; /* A soft red */
   }
 
   .digits-game {
-    background-color: #99ff99; /* A soft green */
+    background-color: #9999ff; /* A soft green */
   }
 
   .digits-reversed-game {
@@ -43,7 +54,7 @@
   }
 
   .verbal-game {
-    background-color: #87CEEB; /* A sky blue */
+    background-color: #9999ff; /* A sky blue */
   }
 
   /* Hover effects to make the buttons interactive */
@@ -51,4 +62,26 @@
     opacity: 0.9;
     transform: scale(1.05);
     transition: all 0.3s ease;
+  }
+
+  .disabled {
+    pointer-events: none;
+    color: darkgrey;
+    background-color: #555555; /* Dark grey background for disabled buttons */
+  }
+
+  .see-score-button {
+    padding: 15px 30px;
+    border-radius: 10px;
+    background-color: #4CAF50; /* Green background */
+    color: white;
+    font-size: 24px;
+    font-family: 'Comic Sans MS', 'Comic Sans', cursive;
+    text-decoration: none; /* Removes the underline from links */
+    display: inline-block;
+    transition: background-color 0.3s ease;
+  }
+
+  .see-score-button:hover {
+    background-color: #45a049; /* Darker green on hover */
   }

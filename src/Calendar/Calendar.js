@@ -3,7 +3,7 @@ import './Calendar.css';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 
-const Calendar = () => {
+const Calendar = (scores, updateScores) => {
 
     const [userid, setUID] = useState('');
     const [showError, setShowError] = useState(false);
@@ -25,12 +25,12 @@ const Calendar = () => {
 
     return (
         <div className="calendar-container">
-            <h1>Calendar</h1>
-            <input className="input-box" value={userid} placeholder='Player ID' onChange={handleUserIDChange} />
+            <h1>Save the Multiverse</h1>
+            <input className="input-box" value={userid} placeholder='Enter Player ID Here' onChange={handleUserIDChange} />
             {showError && <p className="error-message">Please enter a valid Player ID.</p>}
             <div className="grid-container">
                 {days.map(day => (
-                    <Link key={day} to={`${userid}/${day}/intervention`} onClick={handleClick}>
+                    <Link key={day} to={`${userid}/${day}/intervention`} onClick={handleClick} state={{scores: scores, updateScores: updateScores}}>
                         <button className="grid-button">Day {day}</button>
                     </Link>
                 ))}

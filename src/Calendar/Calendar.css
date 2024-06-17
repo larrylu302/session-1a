@@ -1,9 +1,20 @@
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
 .calendar-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center; /* Center the grid vertically */
   height: 100vh; /* Full viewport height */
+  background-image: url('cal_background.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .input-box {

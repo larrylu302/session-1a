@@ -3,9 +3,19 @@ import './NumbersGame.css';
 import BackToHomeButton from '../Backtohomebutton';
 import volumeIcon from './volume_icon.png';
 import readInstructions from './decipher_password_voiceover.mp3';
-import { Link } from 'react-router-dom';
+import { Link, useLocation} from 'react-router-dom';
 
 const NumbersGame = () => {
+  const location = useLocation();
+  const {scores, setScores} = location.state || {};
+
+  const updateScores = (game, score) => {
+    setScores(prevScores => ({
+      ...prevScores,
+      ['numbers']: score
+    }));
+  };
+  
   const initialGameState = {
     numberSequence: [],
     userSequence: [],
@@ -134,7 +144,7 @@ const NumbersGame = () => {
 
   return (
     <div className="NumbersGame">
-      <BackToHomeButton />
+      {/* <BackToHomeButton /> */}
 
       {!gameStarted && !showSettingsForm && (
         <div>
@@ -145,6 +155,7 @@ const NumbersGame = () => {
             presented.
             <div>But be careful! You cannot change your answers once you’ve selected them.  
             Choose wisely. The fate of the multiverse depends on you!</div>
+
           </div>
           <div className="initial-buttons">
             <button style={{marginRight:'20px'}} className="number-button" onClick={handleShowSettings}>Settings</button>
@@ -176,11 +187,11 @@ const NumbersGame = () => {
         </>
       )}
       {gameState.gameOver && (
-        <GameOverDisplay
-          score={gameState.score}
-          maxDigitsInRound={gameState.maxDigitsInRound}
-          onRestart={resetGame}
-        />
+      <div className="numbers-instructions">
+          <h2>Game Over</h2>
+          <p>Your final score is: {gameState.score}</p>
+          <p>Maximum digits recalled in one round: {gameState.maxDigitsInRound}</p>
+      </div>
       )}
     </div>
   );
@@ -207,14 +218,14 @@ const RecallDisplay = ({ onNumberClick }) => (
   </div>
 );
 
-const GameOverDisplay = ({ score, maxDigitsInRound, onRestart }) => (
+const GameOverDisplay = ({ score, maxDigitsInRound, updateScore }) => {
+  return (
   <div className="numbers-instructions">
     <h2>Game Over</h2>
     <p>Your final score is: {score}</p>
     <p>Maximum digits recalled in one round: {maxDigitsInRound}</p>
-    <button onClick={onRestart} className="number-setting-button-submit">Done</button>
   </div>
-);
+)};
 
 const SettingsForm = ({ onSave, initialSettings }) => {
   const [localSettings, setLocalSettings] = useState(initialSettings);

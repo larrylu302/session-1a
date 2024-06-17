@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import './VideoPlayer.css';
 import w1_v1 from './videos/w1_v1.mp4';
 import w1_v2 from './videos/w1_v2.mp4';
@@ -82,6 +82,8 @@ const videoSources = {
 const VideoPlayer = () => {
   const {name, day, video} = useParams();
   const [videoEnded, setVideoEnded] = useState(false);
+  const [endgame] = useState(video === "intervention");
+
   const videoRef = useRef(null);
 
   useEffect(() => {
@@ -114,9 +116,9 @@ const VideoPlayer = () => {
         <source src={videoSrc} type="video/mp4" />
         Your browser does not support the video tag.
       </video>
-      <Link to={`/${name}/${day}/home`} className="skip-button" onClick={videoEnded ? undefined : handleSkipVideo}>
+      {endgame && (<Link to={`/${name}/${day}/home`} className="skip-button" onClick={videoEnded ? undefined : handleSkipVideo}>
         {videoEnded ? 'Next' : 'Skip Video'}
-      </Link>
+      </Link>)}
     </div>
   );
 };
