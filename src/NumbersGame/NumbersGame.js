@@ -3,19 +3,14 @@ import './NumbersGame.css';
 import BackToHomeButton from '../Backtohomebutton';
 import volumeIcon from './volume_icon.png';
 import readInstructions from './decipher_password_voiceover.mp3';
-import { Link, useLocation} from 'react-router-dom';
+import { useScores } from '../ScoresContext';
+import { useParams, useNavigate } from 'react-router-dom';
 
 const NumbersGame = () => {
-  const location = useLocation();
-  const {scores, setScores} = location.state || {};
+  const { scores, updateScores } = useScores();
+  const navigate = useNavigate(); // Hook to access the navigate function
+  const {name, day} = useParams();
 
-  const updateScores = (game, score) => {
-    setScores(prevScores => ({
-      ...prevScores,
-      ['numbers']: score
-    }));
-  };
-  
   const initialGameState = {
     numberSequence: [],
     userSequence: [],
@@ -27,17 +22,15 @@ const NumbersGame = () => {
     totalRounds: 3,
     score: 0,
     maxDigitsInRound: 0,
-  };
-
-  const initialSettings = {
-    sequenceLength: 1,
-    intervalBetweenDigits: 1,
-    timeBeforeTest: 1,
-    totalRounds: 1,
+    initialSettings: {
+      sequenceLength: 1,
+      intervalBetweenDigits: 1,
+      timeBeforeTest: 1,
+      totalRounds: 1,}
   };
 
   const [gameState, setGameState] = useState(initialGameState);
-  const [settings, setSettings] = useState(initialSettings);
+  const [settings, setSettings] = useState(gameState.initialSettings);
   const [showSettingsForm, setShowSettingsForm] = useState(false);
   const [gameStarted, setGameStarted] = useState(false);
   const [muted, setMuted] = useState(false);
@@ -70,16 +63,6 @@ const NumbersGame = () => {
       }
     } else {
       setGameState(prevState => ({ ...prevState, gameOver: true }));
-    }
-  };
-
-  const resetGame = () => {
-    setGameState(initialGameState);
-    setGameStarted(false);
-    setShowSettingsForm(false);
-    if (audioRef.current) {
-      audioRef.current.pause();
-      audioRef.current.currentTime = 0;
     }
   };
 
@@ -142,9 +125,18 @@ const NumbersGame = () => {
     }
   };
 
+  const handleGameOver = () => {
+    updateScores('numbers',
+      {'Final Score': gameState.score,
+      'Max Digits Recalled in One Round': gameState.maxDigitsInRound,
+    }
+    )
+    navigate(`/${name}/${day}/home`); // Navigate back to the home page
+  }
+
   return (
     <div className="NumbersGame">
-      {/* <BackToHomeButton /> */}
+      <BackToHomeButton />
 
       {!gameStarted && !showSettingsForm && (
         <div>
@@ -191,6 +183,7 @@ const NumbersGame = () => {
           <h2>Game Over</h2>
           <p>Your final score is: {gameState.score}</p>
           <p>Maximum digits recalled in one round: {gameState.maxDigitsInRound}</p>
+          <button className="number-setting-button-submit" onClick={handleGameOver}>Done</button>
       </div>
       )}
     </div>
@@ -217,15 +210,6 @@ const RecallDisplay = ({ onNumberClick }) => (
     </div>
   </div>
 );
-
-const GameOverDisplay = ({ score, maxDigitsInRound, updateScore }) => {
-  return (
-  <div className="numbers-instructions">
-    <h2>Game Over</h2>
-    <p>Your final score is: {score}</p>
-    <p>Maximum digits recalled in one round: {maxDigitsInRound}</p>
-  </div>
-)};
 
 const SettingsForm = ({ onSave, initialSettings }) => {
   const [localSettings, setLocalSettings] = useState(initialSettings);

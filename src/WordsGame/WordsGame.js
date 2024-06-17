@@ -1,13 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import './WordsGame.css';
 import BackToHomeButton from '../Backtohomebutton';
+import { useScores } from '../ScoresContext';
+import { useParams, useNavigate } from 'react-router-dom'; // Import useNavigate hook from React Router
+
 
 const ANIMALS = ['Lion', 'Tiger', 'Bear', 'Elephant', 'Giraffe', 'Zebra', 'Fox', 'Wolf', 'Eagle', 'Hawk', 'Shark', 'Dolphin', 'Whale', 'Frog', 'Deer', 'Rabbit'];
 
+
 const WordsGame = () => {
+  const { scores, updateScores } = useScores();
+  const navigate = useNavigate(); // Hook to access the navigate function
+  const {name, day} = useParams();
+
   const SettingsForm = ({ onSave, initialSettings }) => {
     const [localSettings, setLocalSettings] = useState(initialSettings);
-
     const handleSubmit = (e) => {
       e.preventDefault();
       onSave({
@@ -15,7 +22,7 @@ const WordsGame = () => {
         memorizationTime: localSettings.memorizationTimePerWord * 1000 * localSettings.numWords
       });
       setShowSettingsForm(false);
-      setGameState(prev => ({ ...prev, showInitial: true }))
+      setGameState(prev => ({ ...prev, showInitial: true, initialSettings: localSettings }))
     };
 
     return (
@@ -168,26 +175,6 @@ const WordsGame = () => {
     setGameState(prev => ({ ...prev, showResult: true, showChoices: false }));
   };
 
-  const startOver = () => {
-    setGameState(prevState => ({
-      ...prevState,
-      correctWords: [],
-      userChoices: [],
-      showChoices: false,
-      showResult: false,
-      showInitial: true,
-      shouldStartGame: false,
-      result: '',
-      mode: 'Practice',
-      errorCount: 0,
-      score: 0,
-      currentRound: 1,
-      totalRounds: 1,
-      maxWordsRecalled: 0,
-    }));
-    setSettings(gameState.initialSettings);
-  };
-
   const [showSettingsForm, setShowSettingsForm] = useState(false);
 
   return (
@@ -231,6 +218,15 @@ const WordsGame = () => {
     );
   }
 
+  function handleGameOver () {
+    updateScores('words',
+      {'Final Score': gameState.score,
+      'Max Words Recalled in One Round': gameState.maxWordsRecalled,
+    }
+    )
+    navigate(`/${name}/${day}/home`); // Navigate back to the home page
+  }
+
   function renderGameOver() {
     return (
       <div className='words-instructions'>
@@ -243,7 +239,7 @@ const WordsGame = () => {
           Memorization Time per Word: {gameState.initialSettings.memorizationTimePerWord}<br />
           Total Rounds: {gameState.initialSettings.totalRounds}
         </div>
-        <button className="lighter-green-button" onClick={startOver}>Start Over</button>
+        <button className="lighter-green-button" onClick={handleGameOver}>Done</button>
       </div>
     );
   }

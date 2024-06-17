@@ -10,12 +10,14 @@ import VideoPlayer from './VideoPlayer/VideoPlayer';
 import './App.css';
 import Calendar from './Calendar/Calendar';
 import ReversedNumbersGame from './ReversedNumbersGame/ReversedNumbersGame';
+import { ScoresProvider } from './ScoresContext';
 
 function App() {
 
 
   return (
-    <Router>
+    <ScoresProvider>
+      <Router>
       <div className="apple">
         <Routes>
           <Route path="/" element={<Calendar  />} />
@@ -30,6 +32,8 @@ function App() {
         </Routes>
       </div>
     </Router>
+    </ScoresProvider>
+
   );
 }
 

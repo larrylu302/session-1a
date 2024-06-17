@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import "./CategoriesGame.css";
 import BackToHomeButton from "../Backtohomebutton";
+import { useScores } from '../ScoresContext';
+import { useParams, useNavigate } from 'react-router-dom';
+
 
 // Define arrays for different categories
 const Animals = ["Lion", "Tiger", "Bear", "Elephant", "Giraffe", "Zebra", "Fox", "Wolf", "Eagle", "Hawk", "Shark", "Dolphin", "Whale", "Frog", "Deer", "Rabbit"];
@@ -40,6 +43,9 @@ const CATEGORIES = {
 
 // Main functional component for the game
 const CategoriesGame = () => {
+  const { scores, updateScores } = useScores();
+  const navigate = useNavigate(); // Hook to access the navigate function
+  const {name, day} = useParams();
   // Form component for settings, receives save function and initial settings as props
   const SettingsForm = ({ onSave, initialSettings }) => {
     const [localSettings, setLocalSettings] = useState(initialSettings); // State for local settings within the form
@@ -471,6 +477,15 @@ const CategoriesGame = () => {
     }));
     setSettings(gameState.initialSettings);
   };
+  const handleGameOver = () => {
+    updateScores('categories',
+    {'Words Correctly Recalled': gameState.score,
+    'Max Words Recalled in One Round': gameState.maxWordsRecalled,
+  }
+  )
+  navigate(`/${name}/${day}/home`); // Navigate back to the home page
+
+  }
 
   // Render game over screen
   const renderGameOver = () => {
@@ -490,8 +505,8 @@ const CategoriesGame = () => {
           <br />
           Total Rounds: {settings.totalRounds}
         </div>
-        <button className="lighter-green-button" onClick={startOver}>
-          Start Over
+        <button className="lighter-green-button" onClick={handleGameOver}>
+          Done
         </button>
       </div>
     );

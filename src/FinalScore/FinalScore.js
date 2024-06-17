@@ -1,27 +1,32 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
+import { useScores } from '../ScoresContext';
 import './FinalScore.css';
 
 const FinalScore = () => {
+    const { scores } = useScores();
+    const {name, day} = useParams();
+    const navigate = useNavigate(); // Hook to access the navigate function
 
-    const location = useLocation();
-    const {scores} = location.state || {};
     const game_key = {words: "Find the Navigational Coordinates (words)",
                     numbers: "Decipher the Secret Code (numbers)",
                     reversedNumbers: "Unscramble the Code to the Vault (reversed numbers)",
                     categories: "Discover the Code to the Portal (categories)"};
+                    console.log(scores);
     const renderScores = (gameScores) => {
-        console.log("hey");
         return Object.entries(gameScores || {}).map(([key, value]) => (
           <div key={key} className="score-item">
             <span className="score-key">{key}:</span> <span className="score-value">{value}</span>
           </div>
         ));
       };
-
+    const handleNext = () => {
+      navigate(`/${name}/${day}/challenge`);
+    }
       return (
         <div className="final-score-container">
           <h1 className="title">Final Scores</h1>
+          <div>{`${name} - Day ${day}`}</div>
           <div>{console.log(scores)}</div>
           <div className="scores-grid">
             {Object.entries(scores || {}).map(([game, gameScores]) => (
@@ -31,6 +36,7 @@ const FinalScore = () => {
               </div>
             ))}
           </div>
+          <button className='green-button' onClick={handleNext}>Confirm Score</button>
         </div>
       );
 };

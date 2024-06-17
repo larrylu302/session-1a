@@ -7,10 +7,8 @@ import { useNavigate, useParams } from 'react-router-dom'; // Import useNavigate
 const BackToHomeButton = ({scores, updateScore, game, specific_score}) => {
   const navigate = useNavigate(); // Hook to access the navigate function
   const {name, day} = useParams();
-  console.log(scores);
   const goToHome = () => {
-    updateScore(game, specific_score);
-    navigate(`/${name}/${day}/home`, {state: scores}); // Navigate back to the home page
+    navigate(`/${name}/${day}/home`); // Navigate back to the home page
 
   };
 

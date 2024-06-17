@@ -3,8 +3,14 @@ import './ReversedNumbersGame.css';
 import BackToHomeButton from '../Backtohomebutton';
 import volumeIcon from './volume_icon.png';
 import readInstructions from './unscramble_voiceover.mp3'
+import { useScores } from '../ScoresContext';
+import { useParams, useNavigate } from 'react-router-dom';
 
 const ReversedNumbersGame = () => {
+
+  const { scores, updateScores } = useScores();
+  const navigate = useNavigate(); // Hook to access the navigate function
+  const {name, day} = useParams();
   // Initial states for easier resets
   const initialGameState = {
     numberSequence: [],
@@ -133,6 +139,15 @@ const ReversedNumbersGame = () => {
     }
   };
 
+  const handleGameOver = () => {
+    updateScores('reversedNumbers',
+    {'Final Score': gameState.score,
+    'Max Digits Recalled in One Round': gameState.maxDigitsInRound,
+  }
+  )
+  navigate(`/${name}/${day}/home`); // Navigate back to the home page
+  }
+
   return (
     <div className="ReversedNumbersGame">
       <BackToHomeButton />
@@ -177,11 +192,12 @@ const ReversedNumbersGame = () => {
         </>
       )}
       {gameState.gameOver && (
-        <GameOverDisplay
-          score={gameState.score}
-          maxDigitsInRound={gameState.maxDigitsInRound}
-          onRestart={resetGame}
-        />
+        <div className="numbers-instructions">
+        <h2>Game Over</h2>
+        <p>Your final score is: {gameState.score}</p>
+        <p>Maximum digits recalled in one round: {gameState.maxDigitsInRound}</p>
+        <button onClick={handleGameOver} className="number-setting-button-submit">Done</button>
+      </div>
       )}
     </div>
   );
