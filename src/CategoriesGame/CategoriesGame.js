@@ -1,28 +1,26 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./CategoriesGame.css";
 import BackToHomeButton from "../Backtohomebutton";
 import { useScores } from '../ScoresContext';
 import { useParams, useNavigate } from 'react-router-dom';
+import audioInstructions from "./categories-audio.mp3";
 
+const Animals = ["Lion", "Tiger", "Bear", "Elephant", "Giraffe"];
+const Fruits = ["Apple", "Banana", "Orange", "Grape", "Mango"];
+const Vegetables = ["Carrot", "Broccoli", "Spinach", "Potato", "Tomato"];
+const Colors = ["Red", "Blue", "Green", "Yellow", "Purple"];
+const Countries = ["USA", "Canada", "Mexico", "UK", "China"];
+const Sports = ["Soccer", "Basketball", "Baseball", "Tennis", "Swimming"];
+const Jobs = ["Doctor", "Teacher", "Nurse", "Pilot", "Chef"];
+const Vehicles = ["Car", "Truck", "Bus", "Bicycle", "Boat"];
+const Instruments = ["Guitar", "Piano", "Violin", "Drums", "Flute"];
+const Planets = ["Mercury", "Venus", "Earth", "Mars", "Jupiter"];
+const Elements = ["Hydrogen", "Helium", "Oxygen", "Carbon", "Nitrogen"];
+const Languages = ["English", "Spanish", "French", "German", "Chinese"];
+const Flower = ["Rose", "Tulip", "Daisy", "Sunflower", "Lily"];
+const Buildings = ["Skyscraper", "Apartment", "Cottage", "Castle", "School"];
+const Holidays = ["Christmas", "New Year", "Thanksgiving", "Halloween", "Easter"];
 
-// Define arrays for different categories
-const Animals = ["Lion", "Tiger", "Bear", "Elephant", "Giraffe", "Zebra", "Fox", "Wolf", "Eagle", "Hawk", "Shark", "Dolphin", "Whale", "Frog", "Deer", "Rabbit"];
-const Fruits = ["Apple", "Banana", "Orange", "Grape", "Mango", "Pineapple", "Strawberry", "Blueberry", "Watermelon", "Lemon", "Lime", "Cherry", "Peach", "Plum", "Kiwi", "Papaya"];
-const Vegetables = ["Carrot", "Broccoli", "Spinach", "Potato", "Tomato", "Cucumber", "Pepper", "Onion", "Garlic", "Lettuce", "Cabbage", "Cauliflower", "Pumpkin", "Radish", "Beet", "Celery"];
-const Colors = ["Red", "Blue", "Green", "Yellow", "Purple", "Orange", "Pink", "Brown", "Black", "White", "Gray", "Cyan", "Magenta", "Gold", "Silver", "Maroon"];
-const Countries = ["USA", "Canada", "Mexico", "Brazil", "UK", "France", "Germany", "Italy", "Spain", "Russia", "China", "Japan", "India", "Australia", "Egypt", "South Africa"];
-const Sports = ["Soccer", "Basketball", "Baseball", "Tennis", "Golf", "Cricket", "Rugby", "Hockey", "Boxing", "MMA", "Cycling", "Swimming", "Rowing", "Gymnastics", "Surfing", "Skiing"];
-const Jobs = ["Doctor", "Engineer", "Teacher", "Nurse", "Lawyer", "Architect", "Pilot", "Chef", "Artist", "Scientist", "Journalist", "Musician", "Actor", "Dentist", "Plumber", "Electrician"];
-const Vehicles = ["Car", "Truck", "Bus", "Motorcycle", "Bicycle", "Boat", "Airplane", "Helicopter", "Submarine", "Scooter", "Train", "Tram", "Van", "Yacht", "Spaceship", "Tank"];
-const Instruments = ["Guitar", "Piano", "Violin", "Drums", "Flute", "Saxophone", "Trumpet", "Clarinet", "Cello", "Harp", "Accordion", "Banjo", "Trombone", "Oboe", "Mandolin", "Ukulele"];
-const Planets = ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune", "Pluto", "Eris", "Haumea", "Makemake", "Ceres", "Ganymede", "Titan"];
-const Elements = ["Hydrogen", "Helium", "Lithium", "Beryllium", "Boron", "Carbon", "Nitrogen", "Oxygen", "Fluorine", "Neon", "Sodium", "Magnesium", "Aluminum", "Silicon", "Phosphorus"];
-const Languages = ["English", "Spanish", "French", "German", "Chinese", "Japanese", "Korean", "Russian", "Italian", "Portuguese", "Arabic", "Hindi", "Bengali", "Turkish", "Dutch"];
-const Flower = ["Rose", "Tulip", "Daisy", "Sunflower", "Lily", "Orchid", "Daffodil", "Lavender", "Marigold", "Peony", "Chrysanthemum", "Carnation", "Hyacinth", "Iris", "Poppy"];
-const Buildings = ["Skyscraper", "Apartment", "Bungalow", "Cottage", "Mansion", "Castle", "Palace", "Villa", "Hut", "Barn", "Warehouse", "Factory", "Hospital", "School", "Library"];
-const Holidays = ["Christmas", "New Year", "Thanksgiving", "Halloween", "Easter", "Valentine's Day", "Independence Day", "Labor Day", "Memorial Day", "Hanukkah", "Diwali", "Ramadan", "Chinese New Year", "St. Patrick's Day", "Veterans Day", "Mother's Day"];
-
-// Combine all categories into an object
 const CATEGORIES = {
   Animals,
   Fruits,
@@ -41,21 +39,20 @@ const CATEGORIES = {
   Holidays,
 };
 
-// Main functional component for the game
 const CategoriesGame = () => {
   const { scores, updateScores } = useScores();
-  const navigate = useNavigate(); // Hook to access the navigate function
+  const navigate = useNavigate();
   const {name, day} = useParams();
-  // Form component for settings, receives save function and initial settings as props
-  const SettingsForm = ({ onSave, initialSettings }) => {
-    const [localSettings, setLocalSettings] = useState(initialSettings); // State for local settings within the form
+  const audioRef = useRef(audioInstructions); // Reference for audio element
 
-    // Handle form submission
+  const SettingsForm = ({ onSave, initialSettings }) => {
+    const [localSettings, setLocalSettings] = useState(initialSettings);
+
     const handleSubmit = (e) => {
       e.preventDefault();
-      onSave(localSettings); // Save settings to parent component
-      setShowSettingsForm(false); // Hide settings form
-      setGameState((prev) => ({ ...prev, showInitial: true })); // Show initial game view
+      onSave(localSettings);
+      setShowSettingsForm(false);
+      setGameState((prev) => ({ ...prev, showInitial: true }));
     };
 
     return (
@@ -136,7 +133,6 @@ const CategoriesGame = () => {
     );
   };
 
-  // Main state for the game
   const [gameState, setGameState] = useState({
     correctWords: [],
     selectedCategories: [],
@@ -162,12 +158,17 @@ const CategoriesGame = () => {
     },
   });
 
-  // State for game settings
   const [settings, setSettings] = useState(gameState.initialSettings);
-  const [waitCounter, setWaitCounter] = useState(0); // Counter for wait time
-  const [showSettingsForm, setShowSettingsForm] = useState(false); // Flag to show/hide settings form
+  const [waitCounter, setWaitCounter] = useState(0);
+  const [showSettingsForm, setShowSettingsForm] = useState(false);
+  const [isMuted, setIsMuted] = useState(false); // State for mute functionality
 
-  // Process result after each round
+  useEffect(() => {
+    if (audioRef.current && !isMuted && gameState.showInitial) {
+      audioRef.current.play();
+    }
+  }, [isMuted, gameState.showInitial]);
+
   const processResult = () => {
     const score = gameState.correctWords.reduce(
       (acc, word, index) =>
@@ -195,7 +196,6 @@ const CategoriesGame = () => {
     }
   };
 
-  // Start the game
   const startGame = () => {
     const { selectedWords, categories } = selectRandomWords(settings.numCategories);
     setGameState((prevState) => ({
@@ -213,21 +213,18 @@ const CategoriesGame = () => {
     }));
   };
 
-  // Use effect to process results after showing them
   useEffect(() => {
     if (gameState.showResult) {
       processResult();
     }
   }, [gameState.showResult]);
 
-  // Use effect to start game when flag is set
   useEffect(() => {
     if (gameState.shouldStartGame) {
       startGame();
     }
   }, [gameState.shouldStartGame]);
 
-  // Use effect to handle wait time countdown
   useEffect(() => {
     let timer;
     if (waitCounter > 0) {
@@ -237,13 +234,12 @@ const CategoriesGame = () => {
         ...prev,
         showWaitTime: false,
         showSecondChoices: true,
-        userChoices: Array.from({ length: settings.numCategories }, () => Array(5).fill("")), // Reset user choices for second phase
+        userChoices: Array.from({ length: settings.numCategories }, () => Array(5).fill("")),
       }));
     }
     return () => clearTimeout(timer);
   }, [waitCounter, gameState.showWaitTime]);
 
-  // Shuffle an array
   const shuffleArray = (array) => {
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -252,7 +248,6 @@ const CategoriesGame = () => {
     return array;
   };
 
-  // Select random words for categories
   const selectRandomWords = (numCategories) => {
     const categoryKeys = Object.keys(CATEGORIES);
     const shuffledCategoryKeys = shuffleArray([...categoryKeys]);
@@ -273,7 +268,6 @@ const CategoriesGame = () => {
     };
   };
 
-  // Handle word selection
   const handleChoice = (word) => {
     setGameState((prevState) => ({
       ...prevState,
@@ -281,7 +275,6 @@ const CategoriesGame = () => {
     }));
   };
 
-  // Handle category click
   const handleCategoryClick = (categoryIndex, rowIndex) => {
     if (gameState.selectedWord) {
       const category = gameState.selectedCategories[categoryIndex];
@@ -303,7 +296,6 @@ const CategoriesGame = () => {
     }
   };
 
-  // Submit user choices and start wait time
   const submitChoices = () => {
     setWaitCounter(settings.waitTime);
     setGameState((prev) => ({
@@ -313,7 +305,6 @@ const CategoriesGame = () => {
     }));
   };
 
-  // Submit final choices
   const submitFinalChoices = () => {
     setGameState((prev) => ({
       ...prev,
@@ -322,12 +313,10 @@ const CategoriesGame = () => {
     }));
   };
 
-  // Check if all choices have been made
   const canSubmitChoices = () => {
     return gameState.userChoices.every((choices) => choices.every((choice) => choice));
   };
 
-  // Render first part of the game UI
   const renderFirstGameUI = () => {
     return (
       <>
@@ -380,7 +369,6 @@ const CategoriesGame = () => {
     );
   };
 
-  // Assign word to a cell
   const assignWordToCell = (categoryIndex, rowIndex) => {
     if (gameState.selectedWord) {
       setGameState((prevState) => {
@@ -398,9 +386,8 @@ const CategoriesGame = () => {
     }
   };
 
-  // Render second part of the game UI
   const renderSecondGameUI = () => {
-    const allWords = Object.values(CATEGORIES).flat().sort(); // Flatten and sort all words from all categories
+    const allWords = Object.values(CATEGORIES).flat().sort();
     const handleDropdownChange = (e) => {
       const selectedWord = e.target.value;
       handleChoice(selectedWord);
@@ -454,7 +441,6 @@ const CategoriesGame = () => {
     );
   };
 
-  // Restart the game
   const startOver = () => {
     setGameState((prevState) => ({
       ...prevState,
@@ -477,6 +463,7 @@ const CategoriesGame = () => {
     }));
     setSettings(gameState.initialSettings);
   };
+
   const handleGameOver = () => {
     updateScores('categories',
     {'Words Correctly Recalled': gameState.score,
@@ -487,7 +474,6 @@ const CategoriesGame = () => {
 
   }
 
-  // Render game over screen
   const renderGameOver = () => {
     return (
       <div className="words-instructions">
@@ -512,12 +498,10 @@ const CategoriesGame = () => {
     );
   };
 
-  // Render settings form
   const renderSettingsForm = () => {
     return <SettingsForm onSave={(newSettings) => setSettings(newSettings)} initialSettings={settings} />;
   };
 
-  // Render initial view before the game starts
   const renderInitialView = () => {
     return (
       <>
@@ -536,7 +520,6 @@ const CategoriesGame = () => {
     );
   };
 
-  // Render wait time screen
   const renderWaitTime = () => {
     return (
       <div className="wait-time-screen">
@@ -547,15 +530,27 @@ const CategoriesGame = () => {
 
   return (
     <div className="CategoriesGame">
-      <BackToHomeButton /> {/* Navigation button */}
-      {gameState.currentRound <= gameState.totalRounds && renderFirstGameUI()} {/* Render first part of the game */}
-      {gameState.currentRound > gameState.totalRounds && renderGameOver()} {/* Render game over screen */}
-      {showSettingsForm && renderSettingsForm()} {/* Render settings form if flag is set */}
-      {gameState.showInitial && renderInitialView()} {/* Render initial view before game starts */}
-      {gameState.showWaitTime && renderWaitTime()} {/* Render wait time screen */}
-      {gameState.showSecondChoices && renderSecondGameUI()} {/* Render second part of the game */}
+      <audio ref={audioRef} src={audioInstructions} />
+      <BackToHomeButton />
+      {gameState.currentRound <= gameState.totalRounds && renderFirstGameUI()}
+      {gameState.currentRound > gameState.totalRounds && renderGameOver()}
+      {showSettingsForm && renderSettingsForm()}
+      {gameState.showInitial && renderInitialView()}
+      {gameState.showWaitTime && renderWaitTime()}
+      {gameState.showSecondChoices && renderSecondGameUI()}
+      <button
+        className="mute-button"
+        onClick={() => {
+          setIsMuted(!isMuted);
+          if (audioRef.current) {
+            audioRef.current.muted = !isMuted;
+          }
+        }}
+      >
+        {isMuted ? "Unmute" : "Mute"}
+      </button>
     </div>
   );
 };
 
-export default CategoriesGame; // Export the component for use in other parts of the app
+export default CategoriesGame;

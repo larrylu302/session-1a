@@ -21,7 +21,8 @@ const FinalScore = () => {
         ));
       };
     const handleNext = () => {
-      navigate(`/${name}/${day}/challenge`);
+      let confirmation = window.confirm("Has someone confirmed your score?");
+      if(confirmation) navigate(`/${name}/${day}/challenge`);
     }
       return (
         <div className="final-score-container">
@@ -36,6 +37,7 @@ const FinalScore = () => {
               </div>
             ))}
           </div>
+          Please raise your hand before clicking confirm score
           <button className='green-button' onClick={handleNext}>Confirm Score</button>
         </div>
       );

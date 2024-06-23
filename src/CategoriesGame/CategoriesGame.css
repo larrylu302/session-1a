@@ -154,7 +154,7 @@ html, body, #root {
   border: 2px solid black;
   color: black;
   margin: 5px;
-  height: 20px; 
+  height: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -176,7 +176,7 @@ html, body, #root {
   border: 2px solid black;
   color: black;
   margin: 5px;
-  height: 20px; 
+  height: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -218,7 +218,7 @@ html, body, #root {
 .wait-time-text {
   margin-bottom: 20px;
   font-size: 50px;
-  color: black; 
+  color: black;
 }localSettings.totalRounds
 
 input[type="radio"].green-input,
@@ -290,4 +290,19 @@ input[type="checkbox"].green-input:checked::before {
   border: 2px solid black
 }
 
+.mute-button {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  padding: 10px;
+  background-color: green;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  z-index: 1000;
+}
 
+.mute-button:hover {
+  background-color: darkgreen;
+}

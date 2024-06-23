@@ -116,8 +116,8 @@ const VideoPlayer = () => {
         <source src={videoSrc} type="video/mp4" />
         Your browser does not support the video tag.
       </video>
-      {endgame && (<Link to={`/${name}/${day}/home`} className="skip-button" onClick={videoEnded ? undefined : handleSkipVideo}>
-        {videoEnded ? 'Next' : 'Skip Video'}
+      {endgame && videoEnded && (<Link to={`/${name}/${day}/home`} className="skip-button" onClick={videoEnded ? undefined : handleSkipVideo}>
+        Next
       </Link>)}
     </div>
   );

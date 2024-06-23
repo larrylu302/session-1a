@@ -18,7 +18,7 @@ const HomePage = () => {
 
   return (
     <div className="homepage-container">
-      <h1 className="home-title">Select a tile to begin a mission</h1>
+      <h1 className="home-title">Raise your hand, and someone will assist you in selecting a game to play</h1>
       <div className="home-title">{name} - Day {day}</div>
       <div className="games-grid">
         {isLinkActive('words') ? (

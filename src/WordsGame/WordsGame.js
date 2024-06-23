@@ -1,17 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './WordsGame.css';
 import BackToHomeButton from '../Backtohomebutton';
 import { useScores } from '../ScoresContext';
 import { useParams, useNavigate } from 'react-router-dom'; // Import useNavigate hook from React Router
-
+import audioInstructions from "./words-audio.mp3";
 
 const ANIMALS = ['Lion', 'Tiger', 'Bear', 'Elephant', 'Giraffe', 'Zebra', 'Fox', 'Wolf', 'Eagle', 'Hawk', 'Shark', 'Dolphin', 'Whale', 'Frog', 'Deer', 'Rabbit'];
-
 
 const WordsGame = () => {
   const { scores, updateScores } = useScores();
   const navigate = useNavigate(); // Hook to access the navigate function
-  const {name, day} = useParams();
+  const { name, day } = useParams();
+  const audioRef = useRef(null); // Reference for audio element
+  const [isMuted, setIsMuted] = useState(false); // State for mute functionality
 
   const SettingsForm = ({ onSave, initialSettings }) => {
     const [localSettings, setLocalSettings] = useState(initialSettings);
@@ -53,14 +54,14 @@ const WordsGame = () => {
           <label>
             Number of Rounds:
             <input
-                className='green-input'
-                type="number"
-                value={localSettings.totalRounds}
-                onChange={(e) => setLocalSettings({ ...localSettings, totalRounds: parseInt(e.target.value, 10) })}
+              className='green-input'
+              type="number"
+              value={localSettings.totalRounds}
+              onChange={(e) => setLocalSettings({ ...localSettings, totalRounds: parseInt(e.target.value, 10) })}
             />
           </label>
         </div>
-        <button type="submit" className="lighter-green-button" style={{marginTop: "20px", marginBottom: '15px'}}>Save Settings</button>
+        <button type="submit" className="lighter-green-button" style={{ marginTop: "20px", marginBottom: '15px' }}>Save Settings</button>
       </form>
     );
   };
@@ -101,6 +102,12 @@ const WordsGame = () => {
     }
   }, [gameState.shouldStartGame]);
 
+  useEffect(() => {
+    if (audioRef.current && !isMuted && gameState.showInitial) {
+      audioRef.current.play();
+    }
+  }, [isMuted, gameState.showInitial]);
+
   const processResult = () => {
     const score = gameState.correctWords.reduce((acc, word, index) =>
       acc + (gameState.userChoices[index] === word ? 1 : 0), 0);
@@ -126,7 +133,9 @@ const WordsGame = () => {
   };
 
   const startGame = () => {
-
+    if (audioRef.current) {
+      audioRef.current.pause();
+    }
     const selectedWords = selectRandomWords(settings.numWords);
     setGameState(prevState => ({
       ...prevState,
@@ -179,11 +188,23 @@ const WordsGame = () => {
 
   return (
     <div className="WordsGame">
+      <audio ref={audioRef} src={audioInstructions} />
       <BackToHomeButton />
       {gameState.currentRound <= gameState.totalRounds && renderGameUI()}
       {gameState.currentRound > gameState.totalRounds && renderGameOver()}
       {showSettingsForm && renderSettingsForm()}
       {gameState.showInitial && renderInitialView()}
+      <button
+        className="mute-button"
+        onClick={() => {
+          setIsMuted(!isMuted);
+          if (audioRef.current) {
+            audioRef.current.muted = !isMuted;
+          }
+        }}
+      >
+        {isMuted ? "Unmute" : "Mute"}
+      </button>
     </div>
   );
 
@@ -218,11 +239,12 @@ const WordsGame = () => {
     );
   }
 
-  function handleGameOver () {
+  function handleGameOver() {
     updateScores('words',
-      {'Final Score': gameState.score,
-      'Max Words Recalled in One Round': gameState.maxWordsRecalled,
-    }
+      {
+        'Final Score': gameState.score,
+        'Max Words Recalled in One Round': gameState.maxWordsRecalled,
+      }
     )
     navigate(`/${name}/${day}/home`); // Navigate back to the home page
   }
@@ -233,7 +255,7 @@ const WordsGame = () => {
         <h2>Game Over</h2>
         <div>Final Score: {gameState.score}</div>
         <div>Max Words Recalled in One Round: {gameState.maxWordsRecalled}</div>
-        <div className="initial-settings" style={{marginBottom: '20px', marginTop:'20px'}}>
+        <div className="initial-settings" style={{ marginBottom: '20px', marginTop: '20px' }}>
           <strong>Initial Settings:</strong><br />
           Number of Words: {gameState.initialSettings.numWords}<br />
           Memorization Time per Word: {gameState.initialSettings.memorizationTimePerWord}<br />
@@ -258,18 +280,24 @@ const WordsGame = () => {
       <>
         <div style={{ marginBottom: '30px' }} className='words-instructions'>
           <h1>Word Recall</h1>
-            Directions: You will be presented with several words. Your job is to remember these words in order and select tiles with those words in the exact same order that they were presented.
+          Directions: You will be presented with several words. Your job is to remember these words in order and select tiles with those words in the exact same order that they were presented.
 
-          <div style={{paddingTop:'20px'}}>But be careful! You cannot change your answers once you’ve selected a tile. Choose wisely. The fate of the multiverse depends on you!</div>
-
+          <div style={{ paddingTop: '20px' }}>But be careful! You cannot change your answers once you’ve selected a tile. Choose wisely. The fate of the multiverse depends on you!</div>
         </div>
         <button className="green-button" onClick={() => {
           setShowSettingsForm(true);
           setGameState(prev => ({ ...prev, showInitial: false }))
         }}>Settings</button>
-        <button className="green-button" onClick={startGame}>Start Game</button>
+        <button className="green-button" onClick={startGameWithAudioPause}>Start Game</button>
       </>
     );
+  }
+
+  function startGameWithAudioPause() {
+    if (audioRef.current) {
+      audioRef.current.pause();
+    }
+    startGame();
   }
 };
 
