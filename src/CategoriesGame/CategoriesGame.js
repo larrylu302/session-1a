@@ -14,7 +14,7 @@ const Sports = ["Soccer", "Basketball", "Baseball", "Tennis", "Swimming", "Runni
 const Jobs = ["Doctor", "Teacher", "Nurse", "Pilot", "Chef", "Firefighter", "Police", "Farmer"];
 const Vehicles = ["Car", "Truck", "Bus", "Bicycle", "Boat", "Train", "Airplane", "Motorcycle"];
 const Instruments = ["Guitar", "Piano", "Violin", "Drums", "Flute", "Trumpet", "Harp", "Saxophone"];
-const Planets = ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"];
+const Planets = ["Pluto", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"];
 const Elements = ["Hydrogen", "Helium", "Oxygen", "Carbon", "Nitrogen", "Gold", "Silver", "Iron"];
 const Languages = ["English", "Spanish", "French", "German", "Japanese", "Italian", "Russian", "Portuguese"];
 const Flower = ["Rose", "Tulip", "Daisy", "Sunflower", "Lily", "Orchid", "Violet", "Daffodil"];
@@ -323,7 +323,7 @@ const CategoriesGame = () => {
         {gameState.showChoices && (
           <div className="game-container">
             <h2>Place each word in the correct category. You will not be able to place a word in the incorrect category, and can take
-              as much time as you need before moving on. Press "Recall" when you are ready.</h2>
+              as much time as you need before moving on. Press "Recall" when you are ready. <div></div>Try to remember these words</h2>
             <div className="categories-container">
               {gameState.selectedCategories.map((category, categoryIndex) => (
                 <table key={categoryIndex} className="category-table">
@@ -397,16 +397,11 @@ const CategoriesGame = () => {
       <>
         {gameState.showSecondChoices && (
           <div className="game-container">
-            <h2>Navigate through the words and assign the correct words to the correct category. You will not be able to go back one a word is assigned, so choose carefully. Press "Submit Selection" when you are done.</h2>
+            <h2>Navigate through the words and assign a column to a category of words. You will not be able to go back one a word is assigned, so choose carefully. Press "Submit Selection" when you are done.</h2>
             <div className="categories-container">
               {gameState.selectedCategories.map((category, categoryIndex) => (
                 <table key={categoryIndex} className="category-table">
                   <thead>
-                    <tr>
-                      <th className="category-header">
-                        {settings.showCategoryLabel ? category : `Category ${categoryIndex + 1}`}
-                      </th>
-                    </tr>
                   </thead>
                   <tbody>
                     {Array.from({ length: 5 }).map((_, rowIndex) => (
