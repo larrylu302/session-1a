@@ -81,9 +81,9 @@ const WordsGame = () => {
     totalRounds: 1,
     maxWordsRecalled: 0,
     initialSettings: {
-      numWords: 1,
+      numWords: 3,
       memorizationTimePerWord: 1,
-      totalRounds: 1
+      totalRounds: 5
     }
   });
 

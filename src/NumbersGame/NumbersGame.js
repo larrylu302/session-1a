@@ -23,10 +23,10 @@ const NumbersGame = () => {
     score: 0,
     maxDigitsInRound: 0,
     initialSettings: {
-      sequenceLength: 1,
-      intervalBetweenDigits: 1,
+      sequenceLength: 3,
+      intervalBetweenDigits: .75,
       timeBeforeTest: 1,
-      totalRounds: 1,}
+      totalRounds: 5,}
   };
 
   const [gameState, setGameState] = useState(initialGameState);

@@ -152,7 +152,7 @@ const CategoriesGame = () => {
     maxWordsRecalled: 0,
     initialSettings: {
       numCategories: 3,
-      waitTime: 0,
+      waitTime: 1,
       showCategoryLabel: true,
       totalRounds: 1,
     },
