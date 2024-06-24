@@ -4,7 +4,7 @@
   "author": "Lawrence Lu",
   "private": true,
   "main": "main.js",
-  "homepage": "https://larrylu302.github.io/hfhs-memory-game",
+  "homepage": "https://larrylu302.github.io/session-1a",
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",

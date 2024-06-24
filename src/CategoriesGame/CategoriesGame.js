@@ -5,21 +5,21 @@ import { useScores } from '../ScoresContext';
 import { useParams, useNavigate } from 'react-router-dom';
 import audioInstructions from "./categories-audio.mp3";
 
-const Animals = ["Lion", "Tiger", "Bear", "Elephant", "Giraffe"];
-const Fruits = ["Apple", "Banana", "Orange", "Grape", "Mango"];
-const Vegetables = ["Carrot", "Broccoli", "Spinach", "Potato", "Tomato"];
-const Colors = ["Red", "Blue", "Green", "Yellow", "Purple"];
-const Countries = ["USA", "Canada", "Mexico", "UK", "China"];
-const Sports = ["Soccer", "Basketball", "Baseball", "Tennis", "Swimming"];
-const Jobs = ["Doctor", "Teacher", "Nurse", "Pilot", "Chef"];
-const Vehicles = ["Car", "Truck", "Bus", "Bicycle", "Boat"];
-const Instruments = ["Guitar", "Piano", "Violin", "Drums", "Flute"];
-const Planets = ["Mercury", "Venus", "Earth", "Mars", "Jupiter"];
-const Elements = ["Hydrogen", "Helium", "Oxygen", "Carbon", "Nitrogen"];
-const Languages = ["English", "Spanish", "French", "German", "Chinese"];
-const Flower = ["Rose", "Tulip", "Daisy", "Sunflower", "Lily"];
-const Buildings = ["Skyscraper", "Apartment", "Cottage", "Castle", "School"];
-const Holidays = ["Christmas", "New Year", "Thanksgiving", "Halloween", "Easter"];
+const Animals = ["Lion", "Tiger", "Bear", "Elephant", "Giraffe", "Zebra", "Kangaroo", "Penguin"];
+const Fruits = ["Apple", "Banana", "Orange", "Grape", "Mango", "Strawberry", "Pineapple", "Watermelon"];
+const Vegetables = ["Carrot", "Broccoli", "Spinach", "Potato", "Tomato", "Cucumber", "Peas", "Corn"];
+const Colors = ["Red", "Blue", "Green", "Yellow", "Purple", "Pink", "Black", "Brown"];
+const Countries = ["USA", "Canada", "Mexico", "UK", "China", "India", "Australia", "Brazil"];
+const Sports = ["Soccer", "Basketball", "Baseball", "Tennis", "Swimming", "Running", "Cycling", "Gymnastics"];
+const Jobs = ["Doctor", "Teacher", "Nurse", "Pilot", "Chef", "Firefighter", "Police", "Farmer"];
+const Vehicles = ["Car", "Truck", "Bus", "Bicycle", "Boat", "Train", "Airplane", "Motorcycle"];
+const Instruments = ["Guitar", "Piano", "Violin", "Drums", "Flute", "Trumpet", "Harp", "Saxophone"];
+const Planets = ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"];
+const Elements = ["Hydrogen", "Helium", "Oxygen", "Carbon", "Nitrogen", "Gold", "Silver", "Iron"];
+const Languages = ["English", "Spanish", "French", "German", "Japanese", "Italian", "Russian", "Portuguese"];
+const Flower = ["Rose", "Tulip", "Daisy", "Sunflower", "Lily", "Orchid", "Violet", "Daffodil"];
+const Buildings = ["Skyscraper", "Apartment", "Cottage", "Castle", "School", "Hospital", "Library", "Museum"];
+const Holidays = ["Christmas", "New Year", "Thanksgiving", "Halloween", "Easter", "Valentine's Day", "Independence Day", "Hanukkah"];
 
 const CATEGORIES = {
   Animals,
@@ -151,7 +151,7 @@ const CategoriesGame = () => {
     totalRounds: 1,
     maxWordsRecalled: 0,
     initialSettings: {
-      numCategories: 3,
+      numCategories: 4,
       waitTime: 1,
       showCategoryLabel: true,
       totalRounds: 1,
@@ -507,8 +507,10 @@ const CategoriesGame = () => {
       <>
         <div style={{ marginBottom: "30px" }} className="words-instructions">
           <h1>Categories Recall</h1>
-          Directions: You will be presented with several words. Your job is to organize those words into categories, remembering which words were in each category. You will then be given the categories and asked to recall the words in each category from a large word bank.
-          <div style={{ paddingTop: "20px" }}>But be careful! You cannot change your answers once you’ve selected from the word bank.</div>
+          You'll see several words in a grid at the bottom, and four different categories at the top. Click to place each word in the correct category. The computer will help you by only letting you place a word in the right spot. Try to remember the words as you
+ do this. Click “Start” when you are ready. A blank grid will appear with a list of words. Find the words you remembered and click them to fill the grid.
+  <div style={{ paddingTop: "20px" }}>But be careful! You cannot change your answers once you've selected them.
+                  Choose wisely. The fate of the multiverse depends on you! </div>
         </div>
         <button className="green-button" onClick={() => { setShowSettingsForm(true); setGameState((prev) => ({ ...prev, showInitial: false })); }}>
           Settings

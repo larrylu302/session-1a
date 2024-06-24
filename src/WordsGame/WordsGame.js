@@ -280,7 +280,7 @@ const WordsGame = () => {
       <>
         <div style={{ marginBottom: '30px' }} className='words-instructions'>
           <h1>Word Recall</h1>
-          Directions: You will be presented with several words. Your job is to remember these words in order and select tiles with those words in the exact same order that they were presented.
+          Directions: You will be presented with two words at the top of the screen. Your job is to remember these words in order and select tiles with those words in the exact same order that they were presented.
 
           <div style={{ paddingTop: '20px' }}>But be careful! You cannot change your answers once you’ve selected a tile. Choose wisely. The fate of the multiverse depends on you!</div>
         </div>
