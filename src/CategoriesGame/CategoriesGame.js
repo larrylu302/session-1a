@@ -397,7 +397,7 @@ const CategoriesGame = () => {
       <>
         {gameState.showSecondChoices && (
           <div className="game-container">
-            <h2>Navigate through the words and assign a column to a category of words. You will not be able to go back one a word is assigned, so choose carefully. Press "Submit Selection" when you are done.</h2>
+            <h2>Please look through the list of words in the dropdown box and select the words you just saw and put them in the boxes above.</h2>
             <div className="categories-container">
               {gameState.selectedCategories.map((category, categoryIndex) => (
                 <table key={categoryIndex} className="category-table">
