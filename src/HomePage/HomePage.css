@@ -39,6 +39,7 @@ html, body, #root {
     justify-content: center;
     align-items: center;
     height: 150px; /* Set a fixed height for uniformity */
+    background-color: #9999ff;
   }
 
   .words-game {

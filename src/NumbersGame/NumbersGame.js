@@ -5,6 +5,7 @@ import volumeIcon from './volume_icon.png';
 import readInstructions from './decipher_password_voiceover.mp3';
 import { useScores } from '../ScoresContext';
 import { useParams, useNavigate } from 'react-router-dom';
+import PinChecker from '../PinChecker';
 
 const NumbersGame = () => {
   const { scores, updateScores } = useScores();
@@ -136,8 +137,7 @@ const NumbersGame = () => {
 
   return (
     <div className="NumbersGame">
-      <BackToHomeButton />
-
+      {!gameState.gameOver && <BackToHomeButton />}
       {!gameStarted && !showSettingsForm && (
         <div>
           <div style={{ marginBottom: '50px', marginLeft:'30px', marginRight:'30px', paddingBottom:'70px' }} className='numbers-instructions'>
@@ -183,7 +183,8 @@ const NumbersGame = () => {
           <h2>Game Over</h2>
           <p>Your final score is: {gameState.score}</p>
           <p>Maximum digits recalled in one round: {gameState.maxDigitsInRound}</p>
-          <button className="number-setting-button-submit" onClick={handleGameOver}>Done</button>
+          <PinChecker onPinCorrect={handleGameOver}/>
+          {/* <button className="number-setting-button-submit" onClick={handleGameOver}>Done</button> */}
       </div>
       )}
     </div>

@@ -11,6 +11,7 @@ import './App.css';
 import Calendar from './Calendar/Calendar';
 import ReversedNumbersGame from './ReversedNumbersGame/ReversedNumbersGame';
 import { ScoresProvider } from './ScoresContext';
+import PinChecker from './PinChecker';
 
 function App() {
 
@@ -29,6 +30,7 @@ function App() {
           <Route path=":name/:day/home" element={<HomePage />} />
           <Route path=":name/:day/:video" element={<VideoPlayer />} />
           <Route path=":name/:day/final-score" element={<FinalScore />} />
+          <Route path="pin" element={<PinChecker />} />
         </Routes>
       </div>
     </Router>

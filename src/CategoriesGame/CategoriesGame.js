@@ -4,6 +4,7 @@ import BackToHomeButton from "../Backtohomebutton";
 import { useScores } from '../ScoresContext';
 import { useParams, useNavigate } from 'react-router-dom';
 import audioInstructions from "./categories-audio.mp3";
+import PinChecker from "../PinChecker"; // Import the PinChecker component
 
 const Animals = ["Lion", "Tiger", "Bear", "Elephant", "Giraffe", "Zebra", "Kangaroo", "Penguin"];
 const Fruits = ["Apple", "Banana", "Blueberry", "Grape", "Mango", "Strawberry", "Pineapple", "Watermelon"];
@@ -171,7 +172,7 @@ const CategoriesGame = () => {
 
   const processResult = () => {
     const score = gameState.correctWords.reduce(
-      (acc, word, index) =>
+      (acc, word) =>
         acc + (gameState.userChoices.flat().includes(word) ? 1 : 0),
       0
     );
@@ -322,8 +323,11 @@ const CategoriesGame = () => {
       <>
         {gameState.showChoices && (
           <div className="game-container">
-            <h2>Place each word in the correct category. You will not be able to place a word in the incorrect category, and can take
-              as much time as you need before moving on. Press "Recall" when you are ready. <div></div>Try to remember these words</h2>
+            <h2>
+              Place each word in the correct category. You will not be able to place a word in the incorrect category, and can take
+              as much time as you need before moving on. Press "Recall" when you are ready.
+              <div></div>Try to remember these words
+            </h2>
             <div className="categories-container">
               {gameState.selectedCategories.map((category, categoryIndex) => (
                 <table key={categoryIndex} className="category-table">
@@ -401,8 +405,6 @@ const CategoriesGame = () => {
             <div className="categories-container">
               {gameState.selectedCategories.map((category, categoryIndex) => (
                 <table key={categoryIndex} className="category-table">
-                  <thead>
-                  </thead>
                   <tbody>
                     {Array.from({ length: 5 }).map((_, rowIndex) => (
                       <tr key={rowIndex}>
@@ -416,10 +418,10 @@ const CategoriesGame = () => {
               ))}
             </div>
             <div className="word-bank">
-              <select onChange={handleDropdownChange} className="word-selector" value={gameState.selectedWord}>
-              <option value="" disabled>
-                Select a Word
-              </option>
+              <select onChange={handleDropdownChange} className="word-selector" value={gameState.selectedWord || ''}>
+                <option value="" disabled>
+                  Select a Word
+                </option>
                 {allWords.map((word, index) => (
                   <option key={index} value={word} disabled={gameState.userChoices.flat().includes(word)}>
                     {word}
@@ -460,14 +462,12 @@ const CategoriesGame = () => {
   };
 
   const handleGameOver = () => {
-    updateScores('categories',
-    {'Words Correctly Recalled': gameState.score,
-    'Max Words Recalled in One Round': gameState.maxWordsRecalled,
-  }
-  )
-  navigate(`/${name}/${day}/home`); // Navigate back to the home page
-
-  }
+    updateScores('categories', {
+      'Words Correctly Recalled': gameState.score,
+      'Max Words Recalled in One Round': gameState.maxWordsRecalled,
+    });
+    navigate(`/${name}/${day}/home`); // Navigate back to the home page
+  };
 
   const renderGameOver = () => {
     return (
@@ -486,9 +486,9 @@ const CategoriesGame = () => {
           <br />
           Total Rounds: {settings.totalRounds}
         </div>
-        <button className="lighter-green-button" onClick={handleGameOver}>
-          Done
-        </button>
+        {/* Integrate PinChecker and call handleGameOver on correct pin */}
+        <PinChecker onPinCorrect={handleGameOver} />
+        {/* <button className="lighter-green-button" onClick={handleGameOver}>Done</button> */}
       </div>
     );
   };
@@ -503,9 +503,9 @@ const CategoriesGame = () => {
         <div style={{ marginBottom: "30px" }} className="words-instructions">
           <h1>Categories Recall</h1>
           You'll see several words in a grid at the bottom, and four different categories at the top. Click to place each word in the correct category. The computer will help you by only letting you place a word in the right spot. Try to remember the words as you
- do this. Click “Start” when you are ready. A blank grid will appear with a list of words. Find the words you remembered and click them to fill the grid.
-  <div style={{ paddingTop: "20px" }}>But be careful! You cannot change your answers once you've selected them.
-                  Choose wisely. The fate of the multiverse depends on you! </div>
+          do this. Click “Start” when you are ready. A blank grid will appear with a list of words. Find the words you remembered and click them to fill the grid.
+          <div style={{ paddingTop: "20px" }}>But be careful! You cannot change your answers once you've selected them.
+          Choose wisely. The fate of the multiverse depends on you!</div>
         </div>
         <button className="green-button" onClick={() => { setShowSettingsForm(true); setGameState((prev) => ({ ...prev, showInitial: false })); }}>
           Settings
@@ -528,7 +528,7 @@ const CategoriesGame = () => {
   return (
     <div className="CategoriesGame">
       <audio ref={audioRef} src={audioInstructions} />
-      <BackToHomeButton />
+      {gameState.currentRound <= gameState.totalRounds && <BackToHomeButton />}
       {gameState.currentRound <= gameState.totalRounds && renderFirstGameUI()}
       {gameState.currentRound > gameState.totalRounds && renderGameOver()}
       {showSettingsForm && renderSettingsForm()}

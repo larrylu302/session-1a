@@ -4,6 +4,7 @@ import BackToHomeButton from '../Backtohomebutton';
 import { useScores } from '../ScoresContext';
 import { useParams, useNavigate } from 'react-router-dom'; // Import useNavigate hook from React Router
 import audioInstructions from "./words-audio.mp3";
+import PinChecker from '../PinChecker';
 
 const ANIMALS = ['Lion', 'Tiger', 'Bear', 'Elephant', 'Giraffe', 'Zebra', 'Fox', 'Wolf', 'Eagle', 'Hawk', 'Shark', 'Dolphin', 'Whale', 'Frog', 'Deer', 'Rabbit'];
 
@@ -189,7 +190,7 @@ const WordsGame = () => {
   return (
     <div className="WordsGame">
       <audio ref={audioRef} src={audioInstructions} />
-      <BackToHomeButton />
+      {gameState.currentRound <= gameState.totalRounds && <BackToHomeButton />}
       {gameState.currentRound <= gameState.totalRounds && renderGameUI()}
       {gameState.currentRound > gameState.totalRounds && renderGameOver()}
       {showSettingsForm && renderSettingsForm()}
@@ -261,7 +262,8 @@ const WordsGame = () => {
           Memorization Time per Word: {gameState.initialSettings.memorizationTimePerWord}<br />
           Total Rounds: {gameState.initialSettings.totalRounds}
         </div>
-        <button className="lighter-green-button" onClick={handleGameOver}>Done</button>
+        <PinChecker onPinCorrect={handleGameOver} />
+        {/* <button className="lighter-green-button" onClick={handleGameOver}>Done</button> */}
       </div>
     );
   }

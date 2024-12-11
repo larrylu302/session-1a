@@ -5,6 +5,7 @@ import volumeIcon from './volume_icon.png';
 import readInstructions from './unscramble_voiceover.mp3'
 import { useScores } from '../ScoresContext';
 import { useParams, useNavigate } from 'react-router-dom';
+import PinChecker from '../PinChecker';
 
 const ReversedNumbersGame = () => {
 
@@ -150,7 +151,7 @@ const ReversedNumbersGame = () => {
 
   return (
     <div className="ReversedNumbersGame">
-      <BackToHomeButton />
+      {!gameState.gameOver && <BackToHomeButton />}
 
       {!gameStarted && !showSettingsForm && (
         <div>
@@ -196,7 +197,8 @@ const ReversedNumbersGame = () => {
         <h2>Game Over</h2>
         <p>Your final score is: {gameState.score}</p>
         <p>Maximum digits recalled in one round: {gameState.maxDigitsInRound}</p>
-        <button onClick={handleGameOver} className="number-setting-button-submit">Done</button>
+        <PinChecker onPinCorrect={handleGameOver} />
+        {/* <button onClick={handleGameOver} className="number-setting-button-submit">Done</button> */}
       </div>
       )}
     </div>

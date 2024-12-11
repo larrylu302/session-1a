@@ -2,6 +2,7 @@ import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useScores } from '../ScoresContext';
 import './FinalScore.css';
+import PinChecker from '../PinChecker';
 
 const FinalScore = () => {
     const { scores } = useScores();
@@ -21,8 +22,9 @@ const FinalScore = () => {
         ));
       };
     const handleNext = () => {
-      let confirmation = window.confirm("Has someone confirmed your score?");
-      if(confirmation) navigate(`/${name}/${day}/challenge`);
+      // let confirmation = window.confirm("Has someone confirmed your score?");
+      // if(confirmation)
+      navigate(`/${name}/${day}/challenge`);
     }
       return (
         <div className="final-score-container">
@@ -37,8 +39,8 @@ const FinalScore = () => {
               </div>
             ))}
           </div>
-          Please raise your hand before clicking confirm score
-          <button className='green-button' onClick={handleNext}>Confirm Score</button>
+          <PinChecker onPinCorrect={handleNext} />
+          {/* <button className='green-button' onClick={handleNext}>Confirm Score</button> */}
         </div>
       );
 };
