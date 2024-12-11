@@ -6,8 +6,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import audioInstructions from "./categories-audio.mp3";
 
 const Animals = ["Lion", "Tiger", "Bear", "Elephant", "Giraffe", "Zebra", "Kangaroo", "Penguin"];
-const Fruits = ["Apple", "Banana", "Orange", "Grape", "Mango", "Strawberry", "Pineapple", "Watermelon"];
-const Vegetables = ["Carrot", "Broccoli", "Spinach", "Potato", "Tomato", "Cucumber", "Peas", "Corn"];
+const Fruits = ["Apple", "Banana", "Blueberry", "Grape", "Mango", "Strawberry", "Pineapple", "Watermelon"];
+const Vegetables = ["Carrot", "Broccoli", "Spinach", "Potato", "Onion", "Cucumber", "Peas", "Corn"];
 const Colors = ["Red", "Blue", "Green", "Yellow", "Purple", "Pink", "Black", "Brown"];
 const Countries = ["USA", "Canada", "Mexico", "UK", "China", "India", "Australia", "Brazil"];
 const Sports = ["Soccer", "Basketball", "Baseball", "Tennis", "Swimming", "Running", "Cycling", "Gymnastics"];
