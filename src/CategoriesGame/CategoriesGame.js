@@ -165,10 +165,15 @@ const CategoriesGame = () => {
   const [isMuted, setIsMuted] = useState(false); // State for mute functionality
 
   useEffect(() => {
-    if (audioRef.current && !isMuted && gameState.showInitial) {
-      audioRef.current.play();
+    if (audioRef.current) {
+      if ((gameState.showInitial || showSettingsForm) && !isMuted) {
+        audioRef.current.play();
+      } else {
+        audioRef.current.pause();
+        audioRef.current.currentTime = 0;
+      }
     }
-  }, [isMuted, gameState.showInitial]);
+  }, [isMuted, gameState.showInitial, showSettingsForm]);
 
   const processResult = () => {
     const score = gameState.correctWords.reduce(
@@ -392,23 +397,25 @@ const CategoriesGame = () => {
 
   const renderSecondGameUI = () => {
     const allWords = Object.values(CATEGORIES).flat().sort();
-    const handleDropdownChange = (e) => {
-      const selectedWord = e.target.value;
-      handleChoice(selectedWord);
-    };
 
     return (
       <>
         {gameState.showSecondChoices && (
           <div className="game-container">
-            <h2>Please look through the list of words in the dropdown box and select the words you just saw and put them in the boxes above.</h2>
+            <h2>
+              Please look through the list of words below and select the words you
+              just saw. Then place them into the boxes above.
+            </h2>
             <div className="categories-container">
               {gameState.selectedCategories.map((category, categoryIndex) => (
                 <table key={categoryIndex} className="category-table">
                   <tbody>
                     {Array.from({ length: 5 }).map((_, rowIndex) => (
                       <tr key={rowIndex}>
-                        <td className="category-cell" onClick={() => assignWordToCell(categoryIndex, rowIndex)}>
+                        <td
+                          className="category-cell"
+                          onClick={() => assignWordToCell(categoryIndex, rowIndex)}
+                        >
                           {gameState.userChoices[categoryIndex][rowIndex] || ""}
                         </td>
                       </tr>
@@ -417,19 +424,21 @@ const CategoriesGame = () => {
                 </table>
               ))}
             </div>
-            <div className="word-bank">
-              <select onChange={handleDropdownChange} className="word-selector" value={gameState.selectedWord || ''}>
-                <option value="" disabled>
-                  Select a Word
-                </option>
-                {allWords.map((word, index) => (
-                  <option key={index} value={word} disabled={gameState.userChoices.flat().includes(word)}>
-                    {word}
-                  </option>
-                ))}
-              </select>
+            <div className="word-bank second-phase-bank">
+              {allWords.map((word, index) => (
+                <button
+                  key={index}
+                  className={`word-button ${gameState.selectedWord === word ? "selected" : ""} ${
+                    gameState.userChoices.flat().includes(word) ? "grayed-out" : ""
+                  }`}
+                  onClick={() => handleChoice(word)}
+                  disabled={gameState.userChoices.flat().includes(word)}
+                >
+                  {word}
+                </button>
+              ))}
             </div>
-            <button onClick={submitFinalChoices} className="green-button" disabled={!canSubmitChoices()}>
+            <button onClick={submitFinalChoices} className="green-button-categories" disabled={!canSubmitChoices()}>
               Submit Selection
             </button>
           </div>
@@ -437,6 +446,7 @@ const CategoriesGame = () => {
       </>
     );
   };
+
 
   const startOver = () => {
     setGameState((prevState) => ({
@@ -528,24 +538,26 @@ const CategoriesGame = () => {
   return (
     <div className="CategoriesGame">
       <audio ref={audioRef} src={audioInstructions} />
-      {gameState.currentRound <= gameState.totalRounds && <BackToHomeButton />}
+      {gameState.showInitial && <BackToHomeButton />}
       {gameState.currentRound <= gameState.totalRounds && renderFirstGameUI()}
       {gameState.currentRound > gameState.totalRounds && renderGameOver()}
       {showSettingsForm && renderSettingsForm()}
       {gameState.showInitial && renderInitialView()}
       {gameState.showWaitTime && renderWaitTime()}
       {gameState.showSecondChoices && renderSecondGameUI()}
-      <button
-        className="mute-button"
-        onClick={() => {
-          setIsMuted(!isMuted);
-          if (audioRef.current) {
-            audioRef.current.muted = !isMuted;
-          }
-        }}
-      >
-        {isMuted ? "Unmute" : "Mute"}
-      </button>
+      {(gameState.showInitial || showSettingsForm) && (
+        <button
+          className="mute-button"
+          onClick={() => {
+            setIsMuted(!isMuted);
+            if (audioRef.current) {
+              audioRef.current.muted = !isMuted;
+            }
+          }}
+        >
+          {isMuted ? "Unmute" : "Mute"}
+        </button>
+      )}
     </div>
   );
 };

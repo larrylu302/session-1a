@@ -20,9 +20,8 @@ html, body, #root {
   background-repeat: no-repeat;
 }
 
-.green-button {
+.green-button-categories {
   padding: 15px;
-  margin-bottom: 15px;
   font-size: 1.2em;
   cursor: pointer;
   background-color: #bbfac3;
@@ -104,7 +103,7 @@ html, body, #root {
   flex-direction: column;
   align-items: center;
   margin: 20px;
-  margin-top: 100px;
+  margin-top: 0px;
 }
 
 .game-container h2{
@@ -305,4 +304,40 @@ input[type="checkbox"].green-input:checked::before {
 
 .mute-button:hover {
   background-color: darkgreen;
+}
+
+/* Add a distinct class for the second-phase bank to control its size */
+.second-phase-bank {
+  max-height: 225px; /* Adjust this value as needed */
+  overflow-y: auto;
+  background-color: #bbfac3;
+  border: 2px solid black;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+/* Ensure the word buttons are displayed flexibly and wrap when needed */
+.second-phase-bank {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.second-phase-bank .word-button {
+  margin: 2.5px;
+  flex: 0 0 auto; /* Prevent shrinking, but allow wrapping */
+}
+
+/* Optionally, add a scrollbar style if desired */
+.second-phase-bank::-webkit-scrollbar {
+  width: 10px;
+}
+
+.second-phase-bank::-webkit-scrollbar-track {
+  background: #bbfac3;
+}
+
+.second-phase-bank::-webkit-scrollbar-thumb {
+  background: #339c2d;
+  border-radius: 5px;
 }
