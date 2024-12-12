@@ -183,8 +183,8 @@ const NumbersGame = () => {
           <h2>Game Over</h2>
           <p>Your final score is: {gameState.score}</p>
           <p>Maximum digits recalled in one round: {gameState.maxDigitsInRound}</p>
-          <PinChecker onPinCorrect={handleGameOver}/>
-          {/* <button className="number-setting-button-submit" onClick={handleGameOver}>Done</button> */}
+          {/* <PinChecker onPinCorrect={handleGameOver}/> */}
+          <button className="number-setting-button-submit" onClick={handleGameOver}>Done</button>
       </div>
       )}
     </div>

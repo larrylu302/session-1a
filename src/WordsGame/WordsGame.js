@@ -262,8 +262,8 @@ const WordsGame = () => {
           Memorization Time per Word: {gameState.initialSettings.memorizationTimePerWord}<br />
           Total Rounds: {gameState.initialSettings.totalRounds}
         </div>
-        <PinChecker onPinCorrect={handleGameOver} />
-        {/* <button className="lighter-green-button" onClick={handleGameOver}>Done</button> */}
+        {/* <PinChecker onPinCorrect={handleGameOver} /> */}
+        <button className="lighter-green-button" onClick={handleGameOver}>Done</button>
       </div>
     );
   }

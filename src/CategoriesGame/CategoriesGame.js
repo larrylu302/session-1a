@@ -404,7 +404,7 @@ const CategoriesGame = () => {
           <div className="game-container">
             <h2>
               Please look through the list of words below and select the words you
-              just saw. Then place them into the boxes above.
+              just saw. Then place them into the boxes above. Note: Scroll through the word bank to see other words
             </h2>
             <div className="categories-container">
               {gameState.selectedCategories.map((category, categoryIndex) => (
@@ -497,8 +497,8 @@ const CategoriesGame = () => {
           Total Rounds: {settings.totalRounds}
         </div>
         {/* Integrate PinChecker and call handleGameOver on correct pin */}
-        <PinChecker onPinCorrect={handleGameOver} />
-        {/* <button className="lighter-green-button" onClick={handleGameOver}>Done</button> */}
+        {/* <PinChecker onPinCorrect={handleGameOver} /> */}
+        <button className="lighter-green-button" onClick={handleGameOver}>Done</button>
       </div>
     );
   };
