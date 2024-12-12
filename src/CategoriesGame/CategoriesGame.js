@@ -369,7 +369,7 @@ const CategoriesGame = () => {
                 </button>
               ))}
             </div>
-            <button onClick={submitChoices} className="green-button" disabled={!canSubmitChoices()}>
+            <button onClick={submitChoices} className="green-button-categories" disabled={!canSubmitChoices()}>
               Recall
             </button>
           </div>
